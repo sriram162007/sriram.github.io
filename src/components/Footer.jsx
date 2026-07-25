@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion';
 import { CircleDot } from 'lucide-react';
 
 export default function Footer() {

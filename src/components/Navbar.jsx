@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence, useMotionValue, useSpring ,useTransform} from 'framer-motion';
+import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { Menu, X, ArrowUpRight } from 'lucide-react';
 
 const navLinks = [
@@ -20,15 +20,8 @@ export default function Navbar() {
   const mouseY = useMotionValue(0);
   const springX = useSpring(mouseX, { damping: 30, mass: 0.5 });
   const springY = useSpring(mouseY, { damping: 30, mass: 0.5 });
-  const glowX = useTransform(
-  springX,
-  (v) => (v / window.innerWidth) * 100 - 150
-);
-
-const glowY = useTransform(
-  springY,
-  (v) => (v / window.innerHeight) * 100 - 150
-);
+  const glowX = useTransform(springX, (v) => (v / window.innerWidth) * 100 - 150);
+  const glowY = useTransform(springY, (v) => (v / window.innerHeight) * 100 - 150);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 40);
@@ -89,7 +82,7 @@ const glowY = useTransform(
       </motion.div>
 
       <nav
-        className="relative mx-auto flex h-20 max-w-7xl items-center justify-between px-6 lg:px-12"
+        className="relative mx-auto flex h-20 max-w-7xl items-center justify-between px-6 sm:px-10 lg:px-16"
         aria-label="Primary navigation"
       >
         <a
@@ -104,23 +97,23 @@ const glowY = useTransform(
           RAMXCREATES
         </a>
 
-        <div className="hidden md:flex items-center gap-1">
+        <div className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className={`relative px-4 py-2 text-sm font-medium tracking-wide transition-colors duration-300 ${
+              className={`relative px-3 py-2 text-sm font-medium tracking-wide transition-colors duration-300 ${
                 activeSection === link.href.replace('#', '')
                   ? 'text-accent'
-                  : 'text-text-secondary hover:text-text-primary'
+                  : 'text-text-muted hover:text-text-secondary'
               }`}
             >
               {link.name}
               <span
-                className={`absolute bottom-0 left-0 h-[2px] rounded-full bg-accent transition-all duration-300 ${
+                className={`absolute bottom-0 left-1/2 h-[2px] rounded-full bg-accent transition-all duration-300 -translate-x-1/2 ${
                   activeSection === link.href.replace('#', '')
                     ? 'w-full shadow-[0_0_10px_rgba(255,106,0,0.6)]'
-                    : 'w-0 group-hover:w-full'
+                    : 'w-0 hover:w-full'
                 }`}
                 aria-hidden="true"
               />
@@ -128,7 +121,7 @@ const glowY = useTransform(
           ))}
           <a
             href="#contact"
-            className="magnetic-btn ml-4 inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-background transition-all hover:shadow-[0_0_28px_rgba(255,106,0,0.4)] hover:scale-105 active:scale-95"
+            className="magnetic-btn ml-2 inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-background transition-all hover:shadow-[0_0_28px_rgba(255,106,0,0.4)] hover:scale-105 active:scale-95"
           >
             Let&apos;s Talk
             <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
@@ -136,7 +129,7 @@ const glowY = useTransform(
         </div>
 
         <button
-          className="md:hidden flex items-center justify-center rounded-lg p-2 text-text-secondary transition-colors hover:text-accent"
+          className="md:hidden flex items-center justify-center rounded-lg p-2 text-text-muted transition-colors hover:text-accent"
           onClick={() => setIsMobileOpen(!isMobileOpen)}
           aria-expanded={isMobileOpen}
           aria-label="Toggle navigation menu"
@@ -185,7 +178,7 @@ const glowY = useTransform(
                   className={`rounded-lg px-4 py-3 text-base font-medium transition-colors ${
                     activeSection === link.href.replace('#', '')
                       ? 'text-accent bg-accent/[0.06]'
-                      : 'text-text-secondary hover:text-text-primary hover:bg-white/[0.04]'
+                      : 'text-text-muted hover:text-text-secondary hover:bg-white/[0.04]'
                   }`}
                 >
                   {link.name}

@@ -1,4 +1,6 @@
-import { useState, useRef, useCallback } from 'react';
+import { useRef, useCallback } from 'react';
+import BackgroundEffects from './BackgroundEffects';
+import SectionHeader from './SectionHeader';
 import { motion, useMotionValue, useTransform } from 'framer-motion';
 import {
   Bot,
@@ -166,95 +168,18 @@ function ServiceCard({ service, index }) {
     </motion.div>
   );
 }
-
-function BackgroundEffects() {
-  return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-      <div className="absolute top-0 right-0 w-[50vw] h-[50vw] max-w-[700px] max-h-[700px] bg-accent/8 rounded-full blur-[120px] animate-float" style={{ animationDelay: '0s' }} />
-      <div className="absolute bottom-0 left-0 w-[40vw] h-[40vw] max-w-[500px] max-h-[500px] bg-accent/8 rounded-full blur-[100px] animate-float" style={{ animationDelay: '3s' }} />
-      <div className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[30vw] h-[30vw] max-w-[400px] max-h-[400px] bg-accent/4 rounded-full blur-[100px] animate-float" style={{ animationDelay: '6s' }} />
-
-      <div
-        className="absolute inset-0 opacity-[0.02]"
-        style={{
-          backgroundImage:
-            'linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)',
-          backgroundSize: '60px 60px',
-          maskImage: 'radial-gradient(circle at center, black 30%, transparent 80%)',
-          WebkitMaskImage: 'radial-gradient(circle at center, black 30%, transparent 80%)',
-        }}
-      />
-
-      {Array.from({ length: 12 }).map((_, i) => (
-        <motion.span
-          key={i}
-          className="absolute rounded-full bg-accent/25"
-          style={{
-            width: Math.random() * 3 + 1,
-            height: Math.random() * 3 + 1,
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-          }}
-          animate={{
-            y: [0, -15, 0],
-            opacity: [0.1, 0.4, 0.1],
-          }}
-          transition={{
-            duration: Math.random() * 8 + 8,
-            repeat: Infinity,
-            delay: Math.random() * 4,
-            ease: 'easeInOut',
-          }}
-        />
-      ))}
-    </div>
-  );
-}
-
 export default function Services() {
   return (
     <section id="services" className="relative py-32 overflow-hidden" aria-labelledby="services-heading">
-      <BackgroundEffects />
+      <BackgroundEffects particleCount={12} />
 
       <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-12">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-20"
-        >
-          <motion.span
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.03] px-4 py-2 text-xs font-semibold tracking-[0.2em] uppercase text-accent mb-6"
-          >
-            Services
-          </motion.span>
-
-          <motion.h2
-            id="services-heading"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-text-primary mb-6"
-          >
-            What I <span className="gradient-text">Build</span>
-          </motion.h2>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="max-w-2xl mx-auto text-lg leading-relaxed text-text-secondary"
-          >
-            I build practical software and AI-powered solutions that help businesses simplify work, improve productivity, and create better digital experiences.
-          </motion.p>
-        </motion.div>
+        <SectionHeader
+          badge="Services"
+          title={<>What I <span className="gradient-text">Build</span></>}
+          subtitle="I build practical software and AI-powered solutions that help businesses simplify work, improve productivity, and create better digital experiences."
+          headingId="services-heading"
+        />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
           {services.map((service, index) => (

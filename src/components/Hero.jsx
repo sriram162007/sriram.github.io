@@ -6,18 +6,13 @@ import {
   Camera,
   Mail,
   ArrowDownRight,
-  Code2,
-  Brain,
-  Zap,
-  Cpu,
-  Terminal,
 } from 'lucide-react';
 
 const roles = [
   'AI Automation Developer',
   'Full Stack Developer',
   'Business Systems Engineer',
-  'Modern Web Developer',
+  'AI Workflow Builder',
 ];
 
 const socials = [
@@ -27,33 +22,48 @@ const socials = [
   { name: 'Email', href: 'mailto:ramxcreates@gmail.com', icon: Mail },
 ];
 
-function LightRays() {
+function GeometricLines() {
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-[0.03]" aria-hidden="true">
-      <div className="absolute top-0 left-1/4 w-1 h-full bg-gradient-to-b from-transparent via-accent to-transparent rotate-12" />
-      <div className="absolute top-0 left-1/2 w-1 h-full bg-gradient-to-b from-transparent via-accent to-transparent -rotate-6" />
-      <div className="absolute top-0 left-3/4 w-1 h-full bg-gradient-to-b from-transparent via-accent to-transparent rotate-6" />
+    <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+      <svg className="absolute inset-0 w-full h-full opacity-[0.03]" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+            <path d="M 60 0 L 0 0 0 60" fill="none" stroke="white" strokeWidth="0.5" />
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#grid)" />
+      </svg>
+      <motion.div
+        animate={{ rotate: 360 }}
+        transition={{ duration: 120, repeat: Infinity, ease: 'linear' }}
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-white/[0.02] rounded-full"
+      />
+      <motion.div
+        animate={{ rotate: -360 }}
+        transition={{ duration: 150, repeat: Infinity, ease: 'linear' }}
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-accent/[0.03] rounded-full"
+      />
     </div>
   );
 }
 
-function FloatingParticles() {
+function MinimalParticles() {
   const particles = useRef(
-    Array.from({ length: 50 }, (_, i) => ({
+    Array.from({ length: 20 }, (_, i) => ({
       id: i,
       left: `${Math.random() * 100}%`,
       top: `${Math.random() * 100}%`,
-      size: Math.random() * 3 + 0.5,
-      duration: Math.random() * 20 + 10,
-      delay: Math.random() * 10,
-      opacity: Math.random() * 0.3 + 0.05,
+      size: Math.random() * 2 + 0.5,
+      duration: Math.random() * 12 + 10,
+      delay: Math.random() * 6,
+      opacity: Math.random() * 0.2 + 0.05,
     }))
   ).current;
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
       {particles.map((p) => (
-        <span
+        <motion.span
           key={p.id}
           className="absolute rounded-full bg-accent"
           style={{
@@ -62,8 +72,16 @@ function FloatingParticles() {
             width: p.size,
             height: p.size,
             opacity: p.opacity,
-            animation: `particle-float ${p.duration}s ease-in-out ${p.delay}s infinite`,
-            boxShadow: `0 0 ${p.size * 3}px rgba(255,106,0,0.3)`,
+          }}
+          animate={{
+            y: [0, -20, 0],
+            opacity: [p.opacity, p.opacity * 2, p.opacity],
+          }}
+          transition={{
+            duration: p.duration,
+            repeat: Infinity,
+            delay: p.delay,
+            ease: 'easeInOut',
           }}
         />
       ))}
@@ -74,8 +92,11 @@ function FloatingParticles() {
 function MouseGlow() {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-  const springX = useSpring(mouseX, { damping: 20, mass: 0.5 });
-  const springY = useSpring(mouseY, { damping: 20, mass: 0.5 });
+  const springX = useSpring(mouseX, { damping: 25, mass: 0.4 });
+  const springY = useSpring(mouseY, { damping: 25, mass: 0.4 });
+
+  const glowX = useTransform(springX, [0, window.innerWidth], [-250, 250]);
+  const glowY = useTransform(springY, [0, window.innerHeight], [-250, 250]);
 
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -92,64 +113,101 @@ function MouseGlow() {
       aria-hidden="true"
     >
       <motion.div
-        className="absolute w-[600px] h-[600px] rounded-full bg-accent/10 blur-[150px]"
-        style={{
-          x: useTransform(springX, [0, window.innerWidth], [-300, 300]),
-          y: useTransform(springY, [0, window.innerHeight], [-300, 300]),
-        }}
-      />
-      <motion.div
-        className="absolute w-[400px] h-[400px] rounded-full bg-accent/5 blur-[100px]"
-        style={{
-          x: useTransform(springX, [0, window.innerWidth], [-200, 200]),
-          y: useTransform(springY, [0, window.innerHeight], [-200, 200]),
-        }}
+        className="absolute w-[500px] h-[500px] rounded-full bg-accent/8 blur-[120px]"
+        style={{ x: glowX, y: glowY }}
       />
     </motion.div>
   );
 }
 
-function FloatingOrbs() {
+function RoleCycler() {
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIndex((prev) => (prev + 1) % roles.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-      <div
-        className="absolute top-[-10%] right-[-5%] w-[50vw] h-[50vw] max-w-[600px] max-h-[600px] bg-accent/10 rounded-full blur-[120px] animate-float"
-        style={{ animationDelay: '0s' }}
-      />
-      <div
-        className="absolute bottom-[-10%] left-[-5%] w-[40vw] h-[40vw] max-w-[500px] max-h-[500px] bg-accent/8 rounded-full blur-[100px] animate-float"
-        style={{ animationDelay: '3s' }}
-      />
-      <div
-        className="absolute top-[40%] left-[30%] w-[30vw] h-[30vw] max-w-[400px] max-h-[400px] bg-accent/5 rounded-full blur-[100px] animate-float"
-        style={{ animationDelay: '6s' }}
-      />
+      <div className="relative h-[1.6em] overflow-hidden mt-5">
+      <motion.div
+        key={index}
+        initial={{ y: '100%', opacity: 0, filter: 'blur(8px)' }}
+        animate={{ y: '0%', opacity: 1, filter: 'blur(0px)' }}
+        exit={{ y: '-100%', opacity: 0, filter: 'blur(8px)' }}
+        transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+        className="absolute inset-0 font-display text-[28px] font-semibold text-accent"
+      >
+        {roles[index]}
+      </motion.div>
     </div>
   );
 }
 
-function AnimatedGrid() {
+function WordReveal({ children, className, delay = 0 }) {
+  const isString = typeof children === 'string';
+  const words = isString ? children.split(' ') : [];
+
   return (
-    <div
-      className="absolute inset-0 pointer-events-none opacity-[0.04]"
-      style={{
-        backgroundImage:
-          'linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)',
-        backgroundSize: '60px 60px',
-        maskImage: 'radial-gradient(circle at center, black 30%, transparent 80%)',
-        WebkitMaskImage: 'radial-gradient(circle at center, black 30%, transparent 80%)',
+    <motion.span
+      className={className}
+      initial="hidden"
+      animate="visible"
+      variants={{
+        hidden: { opacity: 1 },
+        visible: {
+          opacity: 1,
+          transition: { staggerChildren: 0.07, delayChildren: delay },
+        },
       }}
-      aria-hidden="true"
-    />
+    >
+      {isString ? (
+        words.map((word, i) => (
+          <motion.span
+            key={i}
+            variants={{
+              hidden: { opacity: 0, y: 30, filter: 'blur(12px)' },
+              visible: {
+                opacity: 1,
+                y: 0,
+                filter: 'blur(0px)',
+                transition: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] },
+              },
+            }}
+            className="inline-block"
+          >
+            {word}
+            {i < words.length - 1 && '\u00A0'}
+          </motion.span>
+        ))
+      ) : (
+        <motion.span
+          variants={{
+            hidden: { opacity: 0, y: 20, filter: 'blur(8px)' },
+            visible: {
+              opacity: 1,
+              y: 0,
+              filter: 'blur(0px)',
+              transition: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] },
+            },
+          }}
+          className="inline-block"
+        >
+          {children}
+        </motion.span>
+      )}
+    </motion.span>
   );
 }
 
-function HexFrame({ imageUrl, alt }) {
+function PremiumFrame({ imageUrl, alt }) {
   const ref = useRef(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-  const rotateX = useTransform(y, [-150, 150], [5, -5]);
-  const rotateY = useTransform(x, [-150, 150], [-5, 5]);
+  const rotateX = useTransform(y, [-150, 150], [4, -4]);
+  const rotateY = useTransform(x, [-150, 150], [-4, 4]);
 
   const handleMouseMove = useCallback(
     (e) => {
@@ -173,174 +231,92 @@ function HexFrame({ imageUrl, alt }) {
       ref={ref}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      style={{ rotateX, rotateY, perspective: 1000 }}
-      className="relative w-[300px] h-[300px] sm:w-[360px] sm:h-[360px] md:w-[400px] md:h-[400px]"
+      style={{ rotateX, rotateY, perspective: 1200 }}
+      className="relative"
     >
-      {/* Wireframe outer ring */}
-      <div
-        className="absolute inset-[-12px] rounded-[40%] border border-white/[0.04]"
-        style={{ animation: 'rotate-slow 25s linear infinite' }}
-        aria-hidden="true"
+      {/* Outer wireframe */}
+      <motion.div
+        animate={{ rotate: 360 }}
+        transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
+        className="absolute inset-[-16px] border border-white/[0.03] rounded-[32px]"
       />
 
-      {/* Second wireframe ring */}
-      <div
-        className="absolute inset-[-24px] rounded-[40%] border border-accent/10"
-        style={{ animation: 'rotate-slow 35s linear infinite reverse' }}
-        aria-hidden="true"
+      {/* Floating ring */}
+      <motion.div
+        animate={{ rotate: -360 }}
+        transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
+        className="absolute inset-[-8px] border border-accent/15 rounded-[28px]"
+        style={{ boxShadow: '0 0 60px rgba(255,106,0,0.08)' }}
       />
 
-      {/* Animated orbit ring */}
-      <div
-        className="absolute inset-[-4px] rounded-[40%] border border-accent/20"
+      {/* Main glass frame */}
+      <motion.div
+        animate={{ y: [0, -12, 0] }}
+        transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+        className="relative w-[280px] h-[340px] sm:w-[320px] sm:h-[400px] md:w-[360px] md:h-[460px] rounded-[24px] overflow-hidden"
         style={{
-          boxShadow: '0 0 60px rgba(255,106,0,0.12), inset 0 0 40px rgba(255,106,0,0.04)',
-          animation: 'pulse-glow 4s ease-in-out infinite',
-        }}
-        aria-hidden="true"
-      />
-
-      {/* Hexagon glow ring */}
-      <div
-        className="absolute inset-0 rounded-[40%] border border-accent/30"
-        style={{
-          boxShadow: '0 0 80px rgba(255,106,0,0.15), inset 0 0 50px rgba(255,106,0,0.05)',
-        }}
-        aria-hidden="true"
-      />
-
-      {/* Glass panel */}
-      <div
-        className="absolute inset-0 overflow-hidden rounded-[40%]"
-        style={{
-          background: 'rgba(21,21,21,0.6)',
+          background: 'rgba(18,18,18,0.7)',
           backdropFilter: 'blur(24px) saturate(1.2)',
           WebkitBackdropFilter: 'blur(24px) saturate(1.2)',
-          border: '1px solid rgba(255,106,0,0.12)',
+          border: '1px solid rgba(255,255,255,0.08)',
+          boxShadow: '0 0 80px rgba(255,106,0,0.12), 0 40px 80px rgba(0,0,0,0.5)',
         }}
       >
-        <div className="relative w-full h-full rounded-[38%] overflow-hidden">
+        {/* Profile image */}
+        <div className="absolute inset-0">
           <img
             src={imageUrl}
             alt={alt}
-            width={400}
-            height={400}
+            width={360}
+            height={460}
             loading="eager"
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent" />
+          {/* Gradient overlays */}
+          <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/20 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-b from-accent/10 to-transparent" />
+
           {/* Orange rim light */}
-          <div className="absolute inset-0 rounded-[38%] border border-accent/20" style={{ boxShadow: 'inset 0 0 30px rgba(255,106,0,0.1)' }} />
+          <div
+            className="absolute inset-0 rounded-[24px]"
+            style={{ boxShadow: 'inset 0 0 40px rgba(255,106,0,0.15), inset 0 0 80px rgba(255,106,0,0.05)' }}
+          />
         </div>
-      </div>
 
-      {/* Floating elements */}
-      <FloatingHexIcons />
-    </motion.div>
-  );
-}
-
-function FloatingHexIcons() {
-  const icons = [
-    { Icon: Code2, x: '-18%', y: '-8%', delay: 0 },
-    { Icon: Brain, x: '115%', y: '-3%', delay: 1.2 },
-    { Icon: Zap, x: '-12%', y: '108%', delay: 2.4 },
-    { Icon: Cpu, x: '108%', y: '85%', delay: 3.6 },
-    { Icon: Terminal, x: '-22%', y: '38%', delay: 0.6 },
-  ];
-
-  return (
-    <>
-      {icons.map(({ Icon, x, y, delay }, i) => (
-        <motion.div
-          key={i}
-          className="absolute hidden sm:flex items-center justify-center w-10 h-10 rounded-xl glass-card text-accent"
-          style={{ left: x, top: y }}
-          animate={{
-            y: [0, -10, 0],
-            opacity: [0.5, 1, 0.5],
-          }}
-          transition={{
-            duration: 3 + i * 0.5,
-            repeat: Infinity,
-            delay,
-            ease: 'easeInOut',
-          }}
-        >
-          <Icon className="h-5 w-5" aria-hidden="true" />
-        </motion.div>
-      ))}
-      {/* Glowing dots */}
-      {Array.from({ length: 8 }).map((_, i) => (
-        <motion.span
-          key={`dot-${i}`}
-          className="absolute rounded-full bg-accent/50 hidden sm:block"
+        {/* Reflection line */}
+        <div
+          className="absolute top-0 left-0 right-0 h-1/2 pointer-events-none"
           style={{
-            width: 3,
-            height: 3,
-            left: `${15 + i * 9}%`,
-            top: `${8 + (i % 3) * 28}%`,
+            background: 'linear-gradient(to bottom, rgba(255,255,255,0.03) 0%, transparent 100%)',
           }}
-          animate={{ opacity: [0.1, 0.8, 0.1], scale: [0.8, 1.5, 0.8] }}
-          transition={{ duration: 2 + i * 0.3, repeat: Infinity, delay: i * 0.2 }}
         />
-      ))}
-    </>
-  );
-}
-
-function RoleCycler() {
-  const [index, setIndex] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setIndex((prev) => (prev + 1) % roles.length);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, []);
-
-  return (
-    <div className="relative h-[1.4em] overflow-hidden mt-3">
-      <motion.div
-        key={index}
-        initial={{ y: '100%', opacity: 0 }}
-        animate={{ y: '0%', opacity: 1 }}
-        exit={{ y: '-100%', opacity: 0 }}
-        transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-        className="absolute inset-0 font-display text-xl sm:text-2xl md:text-3xl font-semibold text-accent"
-      >
-        {roles[index]}
       </motion.div>
-    </div>
-  );
-}
 
-function WordByWordReveal({ text, className, delay = 0 }) {
-  const words = text.split(' ');
-
-  return (
-    <motion.div
-      className={className}
-      initial="hidden"
-      animate="visible"
-      variants={{
-        hidden: { opacity: 1 },
-        visible: { opacity: 1, transition: { staggerChildren: 0.08, delayChildren: delay } },
-      }}
-    >
-      {words.map((word, i) => (
-        <motion.span
-          key={i}
-          variants={{
-            hidden: { opacity: 0, y: 20, filter: 'blur(8px)' },
-            visible: { opacity: 1, y: 0, filter: 'blur(0)', transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] } },
-          }}
-          className="inline-block"
-        >
-          {word}
-          {i < words.length - 1 && ' '}
-        </motion.span>
-      ))}
+      {/* Floating particles around frame */}
+      <div className="absolute -inset-6 pointer-events-none" aria-hidden="true">
+        {Array.from({ length: 8 }).map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-1 h-1 rounded-full bg-accent/60"
+            style={{
+              left: `${15 + (i * 10)}%`,
+              top: `${20 + (i % 3) * 25}%`,
+              boxShadow: '0 0 6px rgba(255,106,0,0.6)',
+            }}
+            animate={{
+              y: [0, -10, 0],
+              opacity: [0.2, 0.8, 0.2],
+              scale: [0.8, 1.2, 0.8],
+            }}
+            transition={{
+              duration: 2.5 + i * 0.3,
+              repeat: Infinity,
+              delay: i * 0.2,
+              ease: 'easeInOut',
+            }}
+          />
+        ))}
+      </div>
     </motion.div>
   );
 }
@@ -350,135 +326,160 @@ function ScrollIndicator() {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ delay: 1.5, duration: 1 }}
-      className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-text-muted"
+      transition={{ delay: 1.8, duration: 1 }}
+      className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3"
       aria-hidden="true"
     >
-      <span className="text-[10px] uppercase tracking-[0.3em] font-medium">Scroll</span>
       <motion.div
-        animate={{ y: [0, 8, 0] }}
+        animate={{ scaleY: [1, 1.5, 1], opacity: [0.4, 1, 0.4] }}
         transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+        className="w-5 h-8 rounded-full border border-accent/40 flex justify-center pt-1.5"
       >
-        <ArrowDownRight className="h-4 w-4" />
+        <motion.div
+          animate={{ y: [0, 8, 0], opacity: [1, 0.3, 1] }}
+          transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+          className="w-1 h-1.5 rounded-full bg-accent"
+        />
       </motion.div>
     </motion.div>
   );
 }
 
 export default function Hero() {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   return (
-    <section
-      id="hero"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24"
-      aria-labelledby="hero-heading"
-    >
-      <AnimatedGrid />
-      <LightRays />
-      <FloatingOrbs />
-      <FloatingParticles />
+      <section
+        id="hero"
+        className="relative min-h-screen flex items-center justify-center overflow-hidden bg-background pt-24"
+        aria-labelledby="hero-heading"
+      >
+      {/* Background layers */}
+      <GeometricLines />
+      <MinimalParticles />
       <MouseGlow />
 
+      {/* Vignette */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: 'radial-gradient(circle at center, transparent 40%, rgba(8,8,8,0.8) 100%)',
+        }}
+        aria-hidden="true"
+      />
+
       <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-12 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-10 items-center">
           {/* LEFT SIDE */}
-          <div className="lg:col-span-7 space-y-8">
+          <div className="lg:col-span-7 flex flex-col justify-center space-y-6">
             {/* Label */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
+              transition={{ duration: 1, delay: 0.2 }}
               className="inline-flex items-center gap-3"
             >
               <span className="relative flex h-2 w-2">
                 <span className="absolute inline-flex h-full w-full rounded-full bg-accent opacity-75 animate-ping" />
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-accent" />
               </span>
-              <span className="text-xs font-bold tracking-[0.3em] uppercase text-text-secondary">
+              <span className="text-[15px] font-semibold tracking-[0.3em] uppercase text-accent">
                 AI Automation Developer
               </span>
             </motion.div>
 
-            {/* Name — word-by-word reveal */}
+            {/* Heading */}
             <motion.h1
               id="hero-heading"
-              className="font-display text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-[1.1] tracking-tight text-text-primary break-words"
+              className="font-display font-bold tracking-[-0.02em] leading-[0.9] text-text-primary"
               initial="hidden"
-              animate="visible"
+              animate={isMounted ? 'visible' : 'hidden'}
               variants={{
                 hidden: { opacity: 1 },
-                visible: { opacity: 1, transition: { staggerChildren: 0.06, delayChildren: 0.2 } },
+                visible: {
+                  opacity: 1,
+                  transition: { staggerChildren: 0.06, delayChildren: 0.3 },
+                },
               }}
             >
-              <span className="block">Hey, This is</span>
-              <span className="block mt-2">
-                {'SRI RAM '}
-                <span className="gradient-text glow-text">V</span>
+              <span className="block text-[56px] font-bold">
+                <WordReveal delay={0.4}>Hi, I&apos;m</WordReveal>
+              </span>
+              <span className="block mt-4" style={{ fontSize: 'clamp(66px, 7.2vw, 100px)' }}>
+                <WordReveal delay={0.6}>SRI RAM</WordReveal>
               </span>
             </motion.h1>
 
             {/* Role Cycler */}
-            <RoleCycler />
-
-            {/* Divider */}
             <motion.div
-              initial={{ scaleX: 0 }}
-              animate={{ scaleX: 1 }}
-              transition={{ duration: 1, delay: 0.4 }}
-              className="h-px w-24 bg-gradient-to-r from-accent to-transparent origin-left"
-              aria-hidden="true"
-            />
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.8 }}
+              className="mt-2"
+            >
+              <RoleCycler />
+            </motion.div>
 
             {/* Description */}
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.5 }}
-              className="max-w-xl text-base sm:text-lg leading-relaxed text-text-secondary"
+              transition={{ duration: 0.8, delay: 0.95 }}
+              className="max-w-[560px] text-[22px] leading-[1.8] text-white/72"
             >
-              I build AI-powered automation systems, intelligent web applications, and
-              modern digital experiences that help businesses automate workflows and scale efficiently.
+              I build AI automation systems and modern web applications that solve real business problems. I enjoy creating intelligent workflows, beautiful user experiences, and practical software that helps people work smarter.
             </motion.p>
 
             {/* Buttons */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-              className="flex flex-wrap gap-4"
+              transition={{ duration: 0.8, delay: 1.05 }}
+              className="flex flex-wrap gap-4 mt-1"
             >
-              <a
+              <motion.a
                 href="#projects"
-                className="magnetic-btn inline-flex items-center gap-3 rounded-2xl bg-accent px-7 py-3.5 font-display font-semibold text-background transition-all hover:shadow-[0_0_32px_rgba(255,106,0,0.35)] hover:scale-105 active:scale-95"
+                whileHover={{ scale: 1.02, y: -2 }}
+                whileTap={{ scale: 0.98 }}
+                className="magnetic-btn inline-flex items-center gap-3 rounded-2xl bg-accent/10 border border-accent/30 px-7 py-3.5 font-display font-semibold text-accent backdrop-blur-xl transition-all hover:bg-accent/20 hover:shadow-[0_0_32px_rgba(255,106,0,0.25)]"
               >
-                Explore Projects
+                Explore My Projects
                 <ArrowDownRight className="h-4 w-4" aria-hidden="true" />
-              </a>
-              <a
+              </motion.a>
+              <motion.a
                 href="#contact"
-                className="magnetic-btn inline-flex items-center gap-3 rounded-2xl border border-white/[0.12] bg-white/[0.03] backdrop-blur-xl px-7 py-3.5 font-display font-semibold text-text-primary transition-all hover:border-accent/40 hover:bg-accent/[0.06] hover:scale-105 active:scale-95"
+                whileHover={{ scale: 1.02, y: -2 }}
+                whileTap={{ scale: 0.98 }}
+                className="magnetic-btn inline-flex items-center gap-3 rounded-2xl border border-white/[0.12] bg-white/[0.03] backdrop-blur-xl px-7 py-3.5 font-display font-semibold text-text-primary transition-all hover:border-accent/40 hover:bg-accent/[0.06]"
               >
                 Let&apos;s Connect
-              </a>
+              </motion.a>
             </motion.div>
 
             {/* Social Links */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.7 }}
-              className="flex items-center gap-5 pt-2"
+              transition={{ duration: 0.8, delay: 1.15 }}
+              className="flex items-center gap-4 mt-2"
             >
               {socials.map((social) => (
-                <a
+                <motion.a
                   key={social.name}
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center justify-center w-10 h-10 rounded-xl glass-card text-text-muted transition-all hover:text-accent hover:-translate-y-1"
+                  className="flex items-center justify-center w-10 h-10 rounded-full glass-card text-text-muted transition-all hover:text-accent"
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
                   aria-label={social.name}
                 >
-                  <social.icon className="h-4 w-4 transition-transform group-hover:scale-110" aria-hidden="true" />
-                </a>
+                  <social.icon className="h-4 w-4" aria-hidden="true" />
+                </motion.a>
               ))}
             </motion.div>
           </div>
@@ -486,12 +487,12 @@ export default function Hero() {
           {/* RIGHT SIDE */}
           <div className="lg:col-span-5 flex justify-center">
             <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1, delay: 0.3 }}
+              initial={{ opacity: 0, scale: 0.9, y: 30 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ duration: 1.2, delay: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
               className="relative"
             >
-              <HexFrame
+              <PremiumFrame
                 imageUrl="/images/profile-portrait.png"
                 alt="Sri Ram V — AI Automation Developer"
               />

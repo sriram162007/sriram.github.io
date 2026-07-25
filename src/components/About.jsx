@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import SectionHeader from './SectionHeader';
 import { motion, useInView } from 'framer-motion';
 import { Bot, Code2, Lightbulb, GraduationCap } from 'lucide-react';
 
@@ -86,7 +87,7 @@ function AnimatedCounter({ value, suffix, text }) {
 
 export default function About() {
   return (
-    <section id="about" className="relative pt-24 pb-32 overflow-hidden" aria-labelledby="about-heading">
+    <section id="about" className="relative py-32 overflow-hidden" aria-labelledby="about-heading">
       <div className="absolute inset-0 bg-secondary-bg/60" aria-hidden="true" />
       <div
         className="glow-blob bg-accent/10 w-[500px] h-[500px] top-20 -right-40 opacity-40"
@@ -111,44 +112,12 @@ export default function About() {
 
       <div className="relative mx-auto max-w-7xl px-6 lg:px-12">
         {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-20"
-        >
-          <motion.span
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.03] px-4 py-2 text-xs font-semibold tracking-[0.2em] uppercase text-accent mb-6"
-          >
-            About Me
-          </motion.span>
-
-          <motion.h2
-            id="about-heading"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-text-primary mb-6"
-          >
-            A glimpse into my <span className="gradient-text">journey</span>
-          </motion.h2>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="max-w-2xl mx-auto text-lg leading-relaxed text-text-secondary"
-          >
-            A glimpse into my journey, what I build, and the mindset that drives my work.
-          </motion.p>
-        </motion.div>
+        <SectionHeader
+          badge="About Me"
+          title={<>A glimpse into my <span className="gradient-text">journey</span></>}
+          subtitle="A glimpse into my journey, what I build, and the mindset that drives my work."
+          headingId="about-heading"
+        />
 
         {/* Split Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center mb-24">
@@ -230,7 +199,7 @@ export default function About() {
               key={item.title}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-40px' }}
+                  viewport={{ once: true, margin: '-80px' }}
               transition={{ duration: 0.7, delay: i * 0.1 }}
               whileHover={{ y: -8 }}
               className="glass-card p-6 sm:p-8 group cursor-default"
@@ -252,7 +221,7 @@ export default function About() {
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
+          viewport={{ once: true, margin: '-40px' }}
           transition={{ duration: 0.8 }}
           className="mb-24"
         >
