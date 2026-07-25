@@ -98,8 +98,8 @@ function ProjectCard({ project, index }) {
   const cardRef = useRef(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-  const rotateX = useTransform(y, [-200, 200], [4, -4]);
-  const rotateY = useTransform(x, [-200, 200], [-4, 4]);
+  const rotateX = useTransform(y, [-200, 200], [5, -5]);
+  const rotateY = useTransform(x, [-200, 200], [-5, 5]);
   const glowX = useTransform(x, [-200, 200], ['-20%', '20%']);
   const glowY = useTransform(y, [-200, 200], ['-20%', '20%']);
 
@@ -136,13 +136,13 @@ function ProjectCard({ project, index }) {
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
         style={{ rotateX, rotateY, perspective: 1200, transformStyle: 'preserve-3d' }}
-        className="relative glass-card overflow-hidden transition-all duration-500 hover:shadow-[0_0_60px_rgba(6,182,212,0.08)]"
+        className="relative glass-card overflow-hidden transition-all duration-500 hover:shadow-[0_0_60px_rgba(255,106,0,0.1)]"
       >
         {/* Animated gradient border glow */}
         <div
           className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
           style={{
-            background: 'conic-gradient(from 0deg, transparent 0%, rgba(6,182,212,0.15) 25%, transparent 50%, rgba(59,130,246,0.15) 75%, transparent 100%)',
+            background: 'conic-gradient(from 0deg, transparent 0%, rgba(255,106,0,0.15) 25%, transparent 50%, rgba(255,138,51,0.15) 75%, transparent 100%)',
             filter: 'blur(1px)',
             maskImage: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
             WebkitMaskImage: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
@@ -154,7 +154,7 @@ function ProjectCard({ project, index }) {
 
         {/* Mouse-follow glow */}
         <motion.div
-          className="absolute w-[400px] h-[400px] rounded-full bg-primary/10 blur-[100px] pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+          className="absolute w-[400px] h-[400px] rounded-full bg-accent/10 blur-[100px] pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700"
           style={{ x: glowX, y: glowY, left: '50%', top: '50%', translateX: '-50%', translateY: '-50%' }}
           aria-hidden="true"
         />
@@ -175,7 +175,7 @@ function ProjectCard({ project, index }) {
             {/* Badges overlay */}
             <div className="absolute top-4 left-4 flex flex-wrap gap-2">
               <span className="inline-flex items-center gap-1.5 rounded-full border border-white/[0.08] bg-white/[0.06] backdrop-blur-xl px-3 py-1.5 text-xs font-semibold text-text-primary">
-                <Sparkles className="h-3.5 w-3.5 text-primary" aria-hidden="true" />
+                <Sparkles className="h-3.5 w-3.5 text-accent" aria-hidden="true" />
                 {project.category}
               </span>
               {statusConfig && (
@@ -191,32 +191,28 @@ function ProjectCard({ project, index }) {
 
           {/* Content */}
           <div className="p-6 sm:p-8 space-y-6">
-            {/* Title */}
             <motion.h3
-              className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-text-primary group-hover:text-primary transition-colors duration-300"
+              className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-text-primary group-hover:text-accent transition-colors duration-300"
               style={{ transformStyle: 'preserve-3d', translateZ: 20 }}
             >
               {project.title}
             </motion.h3>
 
-            {/* Description */}
             <p className="text-base leading-relaxed text-text-secondary max-w-3xl">
               {project.description}
             </p>
 
-            {/* Tech badges */}
             <div className="flex flex-wrap gap-2">
               {project.tech.map((t) => (
                 <span
                   key={t}
-                  className="inline-flex items-center rounded-lg border border-white/[0.06] bg-white/[0.03] px-3 py-1.5 text-xs font-semibold text-text-muted transition-all duration-300 group-hover:border-primary/20 group-hover:text-primary"
+                  className="inline-flex items-center rounded-lg border border-white/[0.06] bg-white/[0.03] px-3 py-1.5 text-xs font-semibold text-text-muted transition-all duration-300 group-hover:border-accent/20 group-hover:text-accent"
                 >
                   {t}
                 </span>
               ))}
             </div>
 
-            {/* Features grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-2">
               {project.features.map((feature) => (
                 <div
@@ -224,7 +220,7 @@ function ProjectCard({ project, index }) {
                   className="flex items-start gap-3 rounded-xl border border-white/[0.04] bg-white/[0.02] p-4 transition-all duration-300 group-hover:border-white/[0.08] group-hover:bg-white/[0.04]"
                   style={{ transformStyle: 'preserve-3d', translateZ: 10 }}
                 >
-                  <div className="mt-0.5 rounded-lg bg-primary/10 p-2 text-primary">
+                  <div className="mt-0.5 rounded-lg bg-accent/10 p-2 text-accent">
                     <feature.icon className="h-4 w-4" aria-hidden="true" />
                   </div>
                   <div>
@@ -235,36 +231,37 @@ function ProjectCard({ project, index }) {
               ))}
             </div>
 
-            {/* Buttons */}
-            <div className="flex flex-wrap gap-3 pt-2">
-              {project.buttons.map((btn) => (
-                <motion.a
-                  key={btn.label}
-                  href={btn.href}
-                  target={btn.hasGithub ? '_blank' : undefined}
-                  rel={btn.hasGithub ? 'noopener noreferrer' : undefined}
-                  whileHover={{ y: -3, scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className={`inline-flex items-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold transition-all duration-300 ${
-                    btn.variant === 'primary'
-                      ? 'bg-primary/10 border border-primary/30 text-primary hover:bg-primary/20 hover:shadow-[0_0_24px_rgba(6,182,212,0.2)]'
-                      : 'glass-card text-text-primary hover:text-primary hover:border-primary/30'
-                  }`}
-                >
-                  {btn.hasGithub ? (
-                    <GitBranch className="h-4 w-4" aria-hidden="true" />
-                  ) : btn.label === 'Case Study' ? (
-                    <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-                  ) : (
-                    <ExternalLink className="h-4 w-4" aria-hidden="true" />
-                  )}
-                  {btn.label}
-                  {btn.hasGithub && (
-                    <ExternalLink className="h-3 w-3 opacity-60" aria-hidden="true" />
-                  )}
-                </motion.a>
-              ))}
-            </div>
+            {project.buttons.length > 0 && (
+              <div className="flex flex-wrap gap-3 pt-2">
+                {project.buttons.map((btn) => (
+                  <motion.a
+                    key={btn.label}
+                    href={btn.href}
+                    target={btn.hasGithub ? '_blank' : undefined}
+                    rel={btn.hasGithub ? 'noopener noreferrer' : undefined}
+                    whileHover={{ y: -3, scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className={`inline-flex items-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold transition-all duration-300 ${
+                      btn.variant === 'primary'
+                        ? 'bg-accent/10 border border-accent/30 text-accent hover:bg-accent/20 hover:shadow-[0_0_24px_rgba(255,106,0,0.2)]'
+                        : 'glass-card text-text-primary hover:text-accent hover:border-accent/30'
+                    }`}
+                  >
+                    {btn.hasGithub ? (
+                      <GitBranch className="h-4 w-4" aria-hidden="true" />
+                    ) : btn.label === 'Case Study' ? (
+                      <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                    ) : (
+                      <ExternalLink className="h-4 w-4" aria-hidden="true" />
+                    )}
+                    {btn.label}
+                    {btn.hasGithub && (
+                      <ExternalLink className="h-3 w-3 opacity-60" aria-hidden="true" />
+                    )}
+                  </motion.a>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </motion.div>
@@ -275,12 +272,10 @@ function ProjectCard({ project, index }) {
 function BackgroundEffects() {
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-      {/* Aurora gradient */}
-      <div className="absolute top-0 right-0 w-[60vw] h-[60vw] max-w-[800px] max-h-[800px] bg-primary/10 rounded-full blur-[120px] animate-float" style={{ animationDelay: '0s' }} />
-      <div className="absolute bottom-0 left-0 w-[50vw] h-[50vw] max-w-[600px] max-h-[600px] bg-secondary/10 rounded-full blur-[100px] animate-float" style={{ animationDelay: '3s' }} />
-      <div className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[40vw] h-[40vw] max-w-[500px] max-h-[500px] bg-accent/5 rounded-full blur-[100px] animate-float" style={{ animationDelay: '6s' }} />
+      <div className="absolute top-0 right-0 w-[60vw] h-[60vw] max-w-[800px] max-h-[800px] bg-accent/8 rounded-full blur-[120px] animate-float" style={{ animationDelay: '0s' }} />
+      <div className="absolute bottom-0 left-0 w-[50vw] h-[50vw] max-w-[600px] max-h-[600px] bg-accent/8 rounded-full blur-[100px] animate-float" style={{ animationDelay: '3s' }} />
+      <div className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[40vw] h-[40vw] max-w-[500px] max-h-[500px] bg-accent/4 rounded-full blur-[100px] animate-float" style={{ animationDelay: '6s' }} />
 
-      {/* Subtle grid */}
       <div
         className="absolute inset-0 opacity-[0.02]"
         style={{
@@ -292,11 +287,10 @@ function BackgroundEffects() {
         }}
       />
 
-      {/* Floating particles */}
       {Array.from({ length: 20 }).map((_, i) => (
         <motion.span
           key={i}
-          className="absolute rounded-full bg-primary/40"
+          className="absolute rounded-full bg-accent/30"
           style={{
             width: Math.random() * 3 + 1,
             height: Math.random() * 3 + 1,
@@ -325,7 +319,6 @@ export default function Projects() {
       <BackgroundEffects />
 
       <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-12">
-        {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -338,7 +331,7 @@ export default function Projects() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.03] px-4 py-2 text-xs font-semibold tracking-[0.2em] uppercase text-primary mb-6"
+            className="inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.03] px-4 py-2 text-xs font-semibold tracking-[0.2em] uppercase text-accent mb-6"
           >
             <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
             Featured Projects
@@ -366,7 +359,6 @@ export default function Projects() {
           </motion.p>
         </motion.div>
 
-        {/* Projects Grid */}
         <div className="space-y-8">
           {projects.map((project, index) => (
             <ProjectCard key={project.id} project={project} index={index} />

@@ -1,6 +1,5 @@
-import { useRef, useCallback } from 'react';
-import { motion, useMotionValue, useSpring, useTransform, useInView } from 'framer-motion';
-import ScrollReveal from './ScrollReveal';
+import { useState, useRef, useCallback } from 'react';
+import { motion, useMotionValue, useTransform } from 'framer-motion';
 import {
   Bot,
   MonitorSmartphone,
@@ -47,20 +46,20 @@ const services = [
 
 const colorMap = {
   primary: {
-    iconBg: 'bg-primary/10',
-    iconText: 'text-primary',
-    badgeBorder: 'border-primary/20',
-    badgeBg: 'bg-primary/5',
-    badgeText: 'text-primary',
-    glow: 'rgba(6,182,212,0.2)',
+    iconBg: 'bg-accent/10',
+    iconText: 'text-accent',
+    badgeBorder: 'border-accent/20',
+    badgeBg: 'bg-accent/5',
+    badgeText: 'text-accent',
+    glow: 'rgba(255,106,0,0.2)',
   },
   secondary: {
-    iconBg: 'bg-secondary/10',
-    iconText: 'text-secondary',
-    badgeBorder: 'border-secondary/20',
-    badgeBg: 'bg-secondary/5',
-    badgeText: 'text-secondary',
-    glow: 'rgba(59,130,246,0.2)',
+    iconBg: 'bg-accent/10',
+    iconText: 'text-accent',
+    badgeBorder: 'border-accent/20',
+    badgeBg: 'bg-accent/5',
+    badgeText: 'text-accent',
+    glow: 'rgba(255,138,51,0.2)',
   },
   accent: {
     iconBg: 'bg-accent/10',
@@ -68,7 +67,7 @@ const colorMap = {
     badgeBorder: 'border-accent/20',
     badgeBg: 'bg-accent/5',
     badgeText: 'text-accent',
-    glow: 'rgba(34,211,238,0.2)',
+    glow: 'rgba(255,106,0,0.2)',
   },
 };
 
@@ -114,9 +113,8 @@ function ServiceCard({ service, index }) {
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
         style={{ rotateX, rotateY, perspective: 1000, transformStyle: 'preserve-3d' }}
-        className="relative glass-card overflow-hidden transition-all duration-500 hover:shadow-[0_0_60px_rgba(6,182,212,0.08)]"
+        className="relative glass-card orange-glow overflow-hidden transition-all duration-500 hover:shadow-[0_0_60px_rgba(255,106,0,0.08)]"
       >
-        {/* Mouse-follow glow */}
         <motion.div
           className="absolute w-[350px] h-[350px] rounded-full pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700"
           style={{
@@ -132,7 +130,6 @@ function ServiceCard({ service, index }) {
         />
 
         <div className="relative p-6 sm:p-8 space-y-5">
-          {/* Animated Icon */}
           <motion.div
             animate={{ y: [0, -6, 0] }}
             transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
@@ -141,27 +138,24 @@ function ServiceCard({ service, index }) {
             <Icon className="h-8 w-8" aria-hidden="true" />
           </motion.div>
 
-          {/* Title */}
-          <h3 className="font-display text-xl sm:text-2xl font-bold text-text-primary group-hover:text-primary transition-colors duration-300">
+          <h3 className="font-display text-xl sm:text-2xl font-bold text-text-primary group-hover:text-accent transition-colors duration-300">
             {service.title}
           </h3>
 
-          {/* Description */}
           <p className="text-sm sm:text-base leading-relaxed text-text-secondary">
             {service.description}
           </p>
 
-          {/* Features */}
           <div className="flex flex-wrap gap-2 pt-1">
-            {service.features.map((feature, i) => (
+            {service.features.map((feature) => (
               <motion.span
                 key={feature}
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.3, delay: index * 0.1 + i * 0.05 }}
+                transition={{ duration: 0.3, delay: index * 0.1 + 0.05 }}
                 whileHover={{ scale: 1.05, y: -2 }}
-                className={`inline-flex items-center rounded-xl border ${colors.badgeBorder} ${colors.badgeBg} px-3 py-2 text-xs font-semibold ${colors.badgeText} cursor-default transition-shadow duration-300 hover:shadow-[0_0_16px_var(--color-primary-glow)]`}
+                className={`inline-flex items-center rounded-xl border ${colors.badgeBorder} ${colors.badgeBg} px-3 py-2 text-xs font-semibold ${colors.badgeText} cursor-default transition-shadow duration-300 hover:shadow-[0_0_16px_${colors.glow}]`}
               >
                 {feature}
               </motion.span>
@@ -176,12 +170,10 @@ function ServiceCard({ service, index }) {
 function BackgroundEffects() {
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-      {/* Aurora gradients */}
-      <div className="absolute top-0 right-0 w-[50vw] h-[50vw] max-w-[700px] max-h-[700px] bg-primary/8 rounded-full blur-[120px] animate-float" style={{ animationDelay: '0s' }} />
-      <div className="absolute bottom-0 left-0 w-[40vw] h-[40vw] max-w-[500px] max-h-[500px] bg-secondary/8 rounded-full blur-[100px] animate-float" style={{ animationDelay: '3s' }} />
-      <div className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[30vw] h-[30vw] max-w-[400px] max-h-[400px] bg-accent/5 rounded-full blur-[100px] animate-float" style={{ animationDelay: '6s' }} />
+      <div className="absolute top-0 right-0 w-[50vw] h-[50vw] max-w-[700px] max-h-[700px] bg-accent/8 rounded-full blur-[120px] animate-float" style={{ animationDelay: '0s' }} />
+      <div className="absolute bottom-0 left-0 w-[40vw] h-[40vw] max-w-[500px] max-h-[500px] bg-accent/8 rounded-full blur-[100px] animate-float" style={{ animationDelay: '3s' }} />
+      <div className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[30vw] h-[30vw] max-w-[400px] max-h-[400px] bg-accent/4 rounded-full blur-[100px] animate-float" style={{ animationDelay: '6s' }} />
 
-      {/* Subtle grid */}
       <div
         className="absolute inset-0 opacity-[0.02]"
         style={{
@@ -193,11 +185,10 @@ function BackgroundEffects() {
         }}
       />
 
-      {/* Floating particles */}
       {Array.from({ length: 12 }).map((_, i) => (
         <motion.span
           key={i}
-          className="absolute rounded-full bg-primary/30"
+          className="absolute rounded-full bg-accent/25"
           style={{
             width: Math.random() * 3 + 1,
             height: Math.random() * 3 + 1,
@@ -226,7 +217,6 @@ export default function Services() {
       <BackgroundEffects />
 
       <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-12">
-        {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -239,7 +229,7 @@ export default function Services() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.03] px-4 py-2 text-xs font-semibold tracking-[0.2em] uppercase text-primary mb-6"
+            className="inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.03] px-4 py-2 text-xs font-semibold tracking-[0.2em] uppercase text-accent mb-6"
           >
             Services
           </motion.span>
@@ -266,14 +256,12 @@ export default function Services() {
           </motion.p>
         </motion.div>
 
-        {/* Service Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
           {services.map((service, index) => (
             <ServiceCard key={service.title} service={service} index={index} />
           ))}
         </div>
 
-        {/* CTA Section */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -281,13 +269,13 @@ export default function Services() {
           transition={{ duration: 0.8 }}
           className="mt-24"
         >
-          <div className="glass-card relative overflow-hidden p-8 sm:p-12 md:p-16 text-center">
+          <div className="glass-card orange-glow relative overflow-hidden p-8 sm:p-12 md:p-16 text-center">
             <div
-              className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 opacity-0 hover:opacity-100 transition-opacity duration-700"
+              className="absolute inset-0 bg-gradient-to-br from-accent/5 via-transparent to-accent/5 opacity-0 hover:opacity-100 transition-opacity duration-700"
               aria-hidden="true"
             />
             <div
-              className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-primary/10 blur-[120px] rounded-full -translate-y-1/2"
+              className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-accent/10 blur-[120px] rounded-full -translate-y-1/2"
               aria-hidden="true"
             />
 
@@ -323,14 +311,14 @@ export default function Services() {
                   href="https://wa.me/918248261165"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="magnetic-btn inline-flex items-center gap-2 rounded-2xl bg-primary px-8 py-4 font-display font-semibold text-background transition-all hover:shadow-[0_0_32px_rgba(6,182,212,0.35)] hover:scale-105 active:scale-95"
+                  className="magnetic-btn inline-flex items-center gap-2 rounded-2xl bg-accent px-8 py-4 font-display font-semibold text-background transition-all hover:shadow-[0_0_32px_rgba(255,106,0,0.35)] hover:scale-105 active:scale-95"
                 >
                   Let&apos;s Connect
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </a>
                 <a
                   href="#projects"
-                  className="magnetic-btn inline-flex items-center gap-2 rounded-2xl border border-white/[0.12] bg-white/[0.03] px-8 py-4 font-display font-semibold text-text-primary transition-all hover:border-primary/40 hover:bg-white/[0.06] hover:scale-105 active:scale-95"
+                  className="magnetic-btn inline-flex items-center gap-2 rounded-2xl border border-white/[0.12] bg-white/[0.03] px-8 py-4 font-display font-semibold text-text-primary transition-all hover:border-accent/40 hover:bg-accent/[0.06] hover:scale-105 active:scale-95"
                 >
                   View My Projects
                   <ExternalLink className="h-4 w-4" aria-hidden="true" />

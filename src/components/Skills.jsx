@@ -1,6 +1,5 @@
 import { useState, useRef, useCallback } from 'react';
-import { motion, useMotionValue, useSpring, useTransform, useInView } from 'framer-motion';
-import ScrollReveal from './ScrollReveal';
+import { motion, useMotionValue, useTransform } from 'framer-motion';
 import {
   Brain,
   Workflow,
@@ -53,20 +52,20 @@ const categories = [
 
 const colorMap = {
   primary: {
-    iconBg: 'bg-primary/10',
-    iconText: 'text-primary',
-    badgeBorder: 'border-primary/20',
-    badgeBg: 'bg-primary/5',
-    badgeText: 'text-primary',
-    glow: 'rgba(6,182,212,0.15)',
+    iconBg: 'bg-accent/10',
+    iconText: 'text-accent',
+    badgeBorder: 'border-accent/20',
+    badgeBg: 'bg-accent/5',
+    badgeText: 'text-accent',
+    glow: 'rgba(255,106,0,0.15)',
   },
   secondary: {
-    iconBg: 'bg-secondary/10',
-    iconText: 'text-secondary',
-    badgeBorder: 'border-secondary/20',
-    badgeBg: 'bg-secondary/5',
-    badgeText: 'text-secondary',
-    glow: 'rgba(59,130,246,0.15)',
+    iconBg: 'bg-accent/10',
+    iconText: 'text-accent',
+    badgeBorder: 'border-accent/20',
+    badgeBg: 'bg-accent/5',
+    badgeText: 'text-accent',
+    glow: 'rgba(255,138,51,0.15)',
   },
   accent: {
     iconBg: 'bg-accent/10',
@@ -74,7 +73,7 @@ const colorMap = {
     badgeBorder: 'border-accent/20',
     badgeBg: 'bg-accent/5',
     badgeText: 'text-accent',
-    glow: 'rgba(34,211,238,0.15)',
+    glow: 'rgba(255,106,0,0.15)',
   },
 };
 
@@ -115,7 +114,7 @@ function SkillBadge({ skill, color, index }) {
       viewport={{ once: true, margin: '-20px' }}
       transition={{ duration: 0.4, delay: index * 0.04 }}
       whileHover={{ scale: 1.08, y: -3 }}
-      className={`inline-flex items-center rounded-xl border ${colors.badgeBorder} ${colors.badgeBg} px-4 py-2 text-xs font-semibold ${colors.badgeText} cursor-default transition-shadow duration-300 hover:shadow-[0_0_20px_var(--color-primary-glow)]`}
+      className={`inline-flex items-center rounded-xl border ${colors.badgeBorder} ${colors.badgeBg} px-4 py-2 text-xs font-semibold ${colors.badgeText} cursor-default transition-shadow duration-300 hover:shadow-[0_0_20px_${colors.glow}]`}
     >
       {skill}
     </motion.span>
@@ -164,9 +163,8 @@ function CategoryCard({ category, index }) {
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
         style={{ rotateX, rotateY, perspective: 1000, transformStyle: 'preserve-3d' }}
-        className="relative glass-card overflow-hidden transition-all duration-500 hover:shadow-[0_0_50px_rgba(6,182,212,0.06)]"
+        className="relative glass-card orange-glow overflow-hidden transition-all duration-500 hover:shadow-[0_0_50px_rgba(255,106,0,0.08)]"
       >
-        {/* Mouse-follow glow */}
         <motion.div
           className="absolute w-[300px] h-[300px] rounded-full pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700"
           style={{
@@ -182,7 +180,6 @@ function CategoryCard({ category, index }) {
         />
 
         <div className="relative p-6 sm:p-8 space-y-5">
-          {/* Icon */}
           <motion.div
             whileHover={{ rotate: [0, -5, 5, 0] }}
             transition={{ duration: 0.5 }}
@@ -191,17 +188,14 @@ function CategoryCard({ category, index }) {
             <Icon className="h-7 w-7" aria-hidden="true" />
           </motion.div>
 
-          {/* Title */}
-          <h3 className="font-display text-xl sm:text-2xl font-bold text-text-primary group-hover:text-primary transition-colors duration-300">
+          <h3 className="font-display text-xl sm:text-2xl font-bold text-text-primary group-hover:text-accent transition-colors duration-300">
             {category.title}
           </h3>
 
-          {/* Description */}
           <p className="text-sm sm:text-base leading-relaxed text-text-secondary">
             {category.description}
           </p>
 
-          {/* Skills */}
           <div className="flex flex-wrap gap-2 pt-1">
             {category.skills.map((skill, i) => (
               <SkillBadge key={skill} skill={skill} color={category.color} index={i} />
@@ -216,12 +210,10 @@ function CategoryCard({ category, index }) {
 function BackgroundEffects() {
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-      {/* Aurora gradients */}
-      <div className="absolute top-0 right-0 w-[50vw] h-[50vw] max-w-[700px] max-h-[700px] bg-primary/8 rounded-full blur-[120px] animate-float" style={{ animationDelay: '0s' }} />
-      <div className="absolute bottom-0 left-0 w-[40vw] h-[40vw] max-w-[500px] max-h-[500px] bg-secondary/8 rounded-full blur-[100px] animate-float" style={{ animationDelay: '3s' }} />
-      <div className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[30vw] h-[30vw] max-w-[400px] max-h-[400px] bg-accent/5 rounded-full blur-[100px] animate-float" style={{ animationDelay: '6s' }} />
+      <div className="absolute top-0 right-0 w-[50vw] h-[50vw] max-w-[700px] max-h-[700px] bg-accent/8 rounded-full blur-[120px] animate-float" style={{ animationDelay: '0s' }} />
+      <div className="absolute bottom-0 left-0 w-[40vw] h-[40vw] max-w-[500px] max-h-[500px] bg-accent/8 rounded-full blur-[100px] animate-float" style={{ animationDelay: '3s' }} />
+      <div className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[30vw] h-[30vw] max-w-[400px] max-h-[400px] bg-accent/4 rounded-full blur-[100px] animate-float" style={{ animationDelay: '6s' }} />
 
-      {/* Subtle grid */}
       <div
         className="absolute inset-0 opacity-[0.02]"
         style={{
@@ -233,11 +225,10 @@ function BackgroundEffects() {
         }}
       />
 
-      {/* Floating particles */}
       {Array.from({ length: 15 }).map((_, i) => (
         <motion.span
           key={i}
-          className="absolute rounded-full bg-primary/30"
+          className="absolute rounded-full bg-accent/25"
           style={{
             width: Math.random() * 3 + 1,
             height: Math.random() * 3 + 1,
@@ -270,7 +261,6 @@ export default function Skills() {
       <BackgroundEffects />
 
       <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-12">
-        {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -283,7 +273,7 @@ export default function Skills() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.03] px-4 py-2 text-xs font-semibold tracking-[0.2em] uppercase text-primary mb-6"
+            className="inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.03] px-4 py-2 text-xs font-semibold tracking-[0.2em] uppercase text-accent mb-6"
           >
             <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
             Skills & Technologies
@@ -311,7 +301,6 @@ export default function Skills() {
           </motion.p>
         </motion.div>
 
-        {/* Category Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">
           {categories.map((category, index) => (
             <CategoryCard key={category.title} category={category} index={index} />

@@ -11,14 +11,13 @@ import {
   Zap,
   Cpu,
   Terminal,
-  Download,
 } from 'lucide-react';
 
 const roles = [
   'AI Automation Developer',
   'Full Stack Developer',
   'Business Systems Engineer',
-  'AI Content Creator',
+  'Modern Web Developer',
 ];
 
 const socials = [
@@ -28,16 +27,26 @@ const socials = [
   { name: 'Email', href: 'mailto:ramxcreates@gmail.com', icon: Mail },
 ];
 
+function LightRays() {
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-[0.03]" aria-hidden="true">
+      <div className="absolute top-0 left-1/4 w-1 h-full bg-gradient-to-b from-transparent via-accent to-transparent rotate-12" />
+      <div className="absolute top-0 left-1/2 w-1 h-full bg-gradient-to-b from-transparent via-accent to-transparent -rotate-6" />
+      <div className="absolute top-0 left-3/4 w-1 h-full bg-gradient-to-b from-transparent via-accent to-transparent rotate-6" />
+    </div>
+  );
+}
+
 function FloatingParticles() {
   const particles = useRef(
-    Array.from({ length: 40 }, () => ({
-      id: Math.random().toString(36).slice(2),
+    Array.from({ length: 50 }, (_, i) => ({
+      id: i,
       left: `${Math.random() * 100}%`,
       top: `${Math.random() * 100}%`,
-      size: Math.random() * 3 + 1,
-      duration: Math.random() * 15 + 10,
-      delay: Math.random() * 5,
-      opacity: Math.random() * 0.4 + 0.1,
+      size: Math.random() * 3 + 0.5,
+      duration: Math.random() * 20 + 10,
+      delay: Math.random() * 10,
+      opacity: Math.random() * 0.3 + 0.05,
     }))
   ).current;
 
@@ -46,14 +55,15 @@ function FloatingParticles() {
       {particles.map((p) => (
         <span
           key={p.id}
-          className="absolute rounded-full bg-primary"
+          className="absolute rounded-full bg-accent"
           style={{
             left: p.left,
             top: p.top,
             width: p.size,
             height: p.size,
             opacity: p.opacity,
-            animation: `floatParticle ${p.duration}s ease-in-out ${p.delay}s infinite`,
+            animation: `particle-float ${p.duration}s ease-in-out ${p.delay}s infinite`,
+            boxShadow: `0 0 ${p.size * 3}px rgba(255,106,0,0.3)`,
           }}
         />
       ))}
@@ -82,10 +92,17 @@ function MouseGlow() {
       aria-hidden="true"
     >
       <motion.div
-        className="absolute w-[600px] h-[600px] rounded-full bg-primary/10 blur-[120px]"
+        className="absolute w-[600px] h-[600px] rounded-full bg-accent/10 blur-[150px]"
         style={{
           x: useTransform(springX, [0, window.innerWidth], [-300, 300]),
           y: useTransform(springY, [0, window.innerHeight], [-300, 300]),
+        }}
+      />
+      <motion.div
+        className="absolute w-[400px] h-[400px] rounded-full bg-accent/5 blur-[100px]"
+        style={{
+          x: useTransform(springX, [0, window.innerWidth], [-200, 200]),
+          y: useTransform(springY, [0, window.innerHeight], [-200, 200]),
         }}
       />
     </motion.div>
@@ -95,9 +112,18 @@ function MouseGlow() {
 function FloatingOrbs() {
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-      <div className="absolute top-[-10%] right-[-5%] w-[50vw] h-[50vw] max-w-[600px] max-h-[600px] bg-primary/15 rounded-full blur-[120px] animate-float" style={{ animationDelay: '0s' }} />
-      <div className="absolute bottom-[-10%] left-[-5%] w-[40vw] h-[40vw] max-w-[500px] max-h-[500px] bg-secondary/15 rounded-full blur-[100px] animate-float" style={{ animationDelay: '3s' }} />
-      <div className="absolute top-[40%] left-[30%] w-[30vw] h-[30vw] max-w-[400px] max-h-[400px] bg-accent/10 rounded-full blur-[100px] animate-float" style={{ animationDelay: '6s' }} />
+      <div
+        className="absolute top-[-10%] right-[-5%] w-[50vw] h-[50vw] max-w-[600px] max-h-[600px] bg-accent/10 rounded-full blur-[120px] animate-float"
+        style={{ animationDelay: '0s' }}
+      />
+      <div
+        className="absolute bottom-[-10%] left-[-5%] w-[40vw] h-[40vw] max-w-[500px] max-h-[500px] bg-accent/8 rounded-full blur-[100px] animate-float"
+        style={{ animationDelay: '3s' }}
+      />
+      <div
+        className="absolute top-[40%] left-[30%] w-[30vw] h-[30vw] max-w-[400px] max-h-[400px] bg-accent/5 rounded-full blur-[100px] animate-float"
+        style={{ animationDelay: '6s' }}
+      />
     </div>
   );
 }
@@ -105,7 +131,7 @@ function FloatingOrbs() {
 function AnimatedGrid() {
   return (
     <div
-      className="absolute inset-0 pointer-events-none opacity-[0.03]"
+      className="absolute inset-0 pointer-events-none opacity-[0.04]"
       style={{
         backgroundImage:
           'linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)',
@@ -122,8 +148,8 @@ function HexFrame({ imageUrl, alt }) {
   const ref = useRef(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-  const rotateX = useTransform(y, [-150, 150], [3, -3]);
-  const rotateY = useTransform(x, [-150, 150], [-3, 3]);
+  const rotateX = useTransform(y, [-150, 150], [5, -5]);
+  const rotateY = useTransform(x, [-150, 150], [-5, 5]);
 
   const handleMouseMove = useCallback(
     (e) => {
@@ -148,21 +174,50 @@ function HexFrame({ imageUrl, alt }) {
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       style={{ rotateX, rotateY, perspective: 1000 }}
-      className="relative w-[320px] h-[320px] sm:w-[380px] sm:h-[380px] md:w-[420px] md:h-[420px]"
+      className="relative w-[300px] h-[300px] sm:w-[360px] sm:h-[360px] md:w-[400px] md:h-[400px]"
     >
-      {/* Hexagon outer glow ring */}
+      {/* Wireframe outer ring */}
       <div
-        className="absolute inset-0 rounded-[40%] border border-primary/30"
+        className="absolute inset-[-12px] rounded-[40%] border border-white/[0.04]"
+        style={{ animation: 'rotate-slow 25s linear infinite' }}
+        aria-hidden="true"
+      />
+
+      {/* Second wireframe ring */}
+      <div
+        className="absolute inset-[-24px] rounded-[40%] border border-accent/10"
+        style={{ animation: 'rotate-slow 35s linear infinite reverse' }}
+        aria-hidden="true"
+      />
+
+      {/* Animated orbit ring */}
+      <div
+        className="absolute inset-[-4px] rounded-[40%] border border-accent/20"
         style={{
-          boxShadow: '0 0 60px rgba(6,182,212,0.15), inset 0 0 40px rgba(6,182,212,0.05)',
-          animation: 'hexPulse 4s ease-in-out infinite',
+          boxShadow: '0 0 60px rgba(255,106,0,0.12), inset 0 0 40px rgba(255,106,0,0.04)',
+          animation: 'pulse-glow 4s ease-in-out infinite',
         }}
+        aria-hidden="true"
+      />
+
+      {/* Hexagon glow ring */}
+      <div
+        className="absolute inset-0 rounded-[40%] border border-accent/30"
+        style={{
+          boxShadow: '0 0 80px rgba(255,106,0,0.15), inset 0 0 50px rgba(255,106,0,0.05)',
+        }}
+        aria-hidden="true"
       />
 
       {/* Glass panel */}
       <div
-        className="glass-card absolute inset-0 overflow-hidden rounded-[40%] p-1.5"
-        style={{ backdropFilter: 'blur(24px) saturate(1.2)', background: 'rgba(10,15,35,0.6)' }}
+        className="absolute inset-0 overflow-hidden rounded-[40%]"
+        style={{
+          background: 'rgba(21,21,21,0.6)',
+          backdropFilter: 'blur(24px) saturate(1.2)',
+          WebkitBackdropFilter: 'blur(24px) saturate(1.2)',
+          border: '1px solid rgba(255,106,0,0.12)',
+        }}
       >
         <div className="relative w-full h-full rounded-[38%] overflow-hidden">
           <img
@@ -174,10 +229,12 @@ function HexFrame({ imageUrl, alt }) {
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent" />
+          {/* Orange rim light */}
+          <div className="absolute inset-0 rounded-[38%] border border-accent/20" style={{ boxShadow: 'inset 0 0 30px rgba(255,106,0,0.1)' }} />
         </div>
       </div>
 
-      {/* Floating icons around frame */}
+      {/* Floating elements */}
       <FloatingHexIcons />
     </motion.div>
   );
@@ -185,11 +242,11 @@ function HexFrame({ imageUrl, alt }) {
 
 function FloatingHexIcons() {
   const icons = [
-    { Icon: Code2, x: '-15%', y: '-10%', delay: '0s' },
-    { Icon: Brain, x: '110%', y: '-5%', delay: '1s' },
-    { Icon: Zap, x: '-10%', y: '105%', delay: '2s' },
-    { Icon: Cpu, x: '105%', y: '90%', delay: '3s' },
-    { Icon: Terminal, x: '-20%', y: '40%', delay: '0.5s' },
+    { Icon: Code2, x: '-18%', y: '-8%', delay: 0 },
+    { Icon: Brain, x: '115%', y: '-3%', delay: 1.2 },
+    { Icon: Zap, x: '-12%', y: '108%', delay: 2.4 },
+    { Icon: Cpu, x: '108%', y: '85%', delay: 3.6 },
+    { Icon: Terminal, x: '-22%', y: '38%', delay: 0.6 },
   ];
 
   return (
@@ -197,16 +254,16 @@ function FloatingHexIcons() {
       {icons.map(({ Icon, x, y, delay }, i) => (
         <motion.div
           key={i}
-          className="absolute hidden sm:flex items-center justify-center w-10 h-10 rounded-xl glass-card text-primary"
+          className="absolute hidden sm:flex items-center justify-center w-10 h-10 rounded-xl glass-card text-accent"
           style={{ left: x, top: y }}
           animate={{
-            y: [0, -8, 0],
-            opacity: [0.7, 1, 0.7],
+            y: [0, -10, 0],
+            opacity: [0.5, 1, 0.5],
           }}
           transition={{
-            duration: 3 + i,
+            duration: 3 + i * 0.5,
             repeat: Infinity,
-            delay: parseFloat(delay),
+            delay,
             ease: 'easeInOut',
           }}
         >
@@ -214,17 +271,17 @@ function FloatingHexIcons() {
         </motion.div>
       ))}
       {/* Glowing dots */}
-      {Array.from({ length: 6 }).map((_, i) => (
+      {Array.from({ length: 8 }).map((_, i) => (
         <motion.span
           key={`dot-${i}`}
-          className="absolute rounded-full bg-primary/60 sm:block hidden"
+          className="absolute rounded-full bg-accent/50 hidden sm:block"
           style={{
-            width: 4,
-            height: 4,
-            left: `${20 + i * 14}%`,
-            top: `${10 + (i % 3) * 30}%`,
+            width: 3,
+            height: 3,
+            left: `${15 + i * 9}%`,
+            top: `${8 + (i % 3) * 28}%`,
           }}
-          animate={{ opacity: [0.2, 0.9, 0.2], scale: [0.8, 1.4, 0.8] }}
+          animate={{ opacity: [0.1, 0.8, 0.1], scale: [0.8, 1.5, 0.8] }}
           transition={{ duration: 2 + i * 0.3, repeat: Infinity, delay: i * 0.2 }}
         />
       ))}
@@ -238,23 +295,53 @@ function RoleCycler() {
   useEffect(() => {
     const interval = setInterval(() => {
       setIndex((prev) => (prev + 1) % roles.length);
-    }, 2800);
+    }, 3000);
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <div className="relative h-[1.3em] overflow-hidden mt-2">
+    <div className="relative h-[1.4em] overflow-hidden mt-3">
       <motion.div
         key={index}
         initial={{ y: '100%', opacity: 0 }}
         animate={{ y: '0%', opacity: 1 }}
         exit={{ y: '-100%', opacity: 0 }}
         transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-        className="absolute inset-0 font-display text-xl sm:text-2xl md:text-3xl font-semibold text-primary"
+        className="absolute inset-0 font-display text-xl sm:text-2xl md:text-3xl font-semibold text-accent"
       >
         {roles[index]}
       </motion.div>
     </div>
+  );
+}
+
+function WordByWordReveal({ text, className, delay = 0 }) {
+  const words = text.split(' ');
+
+  return (
+    <motion.div
+      className={className}
+      initial="hidden"
+      animate="visible"
+      variants={{
+        hidden: { opacity: 1 },
+        visible: { opacity: 1, transition: { staggerChildren: 0.08, delayChildren: delay } },
+      }}
+    >
+      {words.map((word, i) => (
+        <motion.span
+          key={i}
+          variants={{
+            hidden: { opacity: 0, y: 20, filter: 'blur(8px)' },
+            visible: { opacity: 1, y: 0, filter: 'blur(0)', transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] } },
+          }}
+          className="inline-block"
+        >
+          {word}
+          {i < words.length - 1 && ' '}
+        </motion.span>
+      ))}
+    </motion.div>
   );
 }
 
@@ -282,57 +369,62 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24 pb-12"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24"
       aria-labelledby="hero-heading"
     >
-      {/* Background layers */}
       <AnimatedGrid />
+      <LightRays />
       <FloatingOrbs />
       <FloatingParticles />
       <MouseGlow />
 
-      {/* Main content */}
       <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-12 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
           {/* LEFT SIDE */}
           <div className="lg:col-span-7 space-y-8">
-            {/* Greeting */}
+            {/* Label */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.03] px-4 py-2"
+              className="inline-flex items-center gap-3"
             >
               <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full rounded-full bg-primary opacity-75 animate-ping" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
+                <span className="absolute inline-flex h-full w-full rounded-full bg-accent opacity-75 animate-ping" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-accent" />
               </span>
-              <span className="text-xs font-semibold tracking-widest uppercase text-text-secondary">
-                Hello, I&apos;m
+              <span className="text-xs font-bold tracking-[0.3em] uppercase text-text-secondary">
+                AI Automation Developer
               </span>
             </motion.div>
 
-            {/* Name */}
+            {/* Name — word-by-word reveal */}
             <motion.h1
               id="hero-heading"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, delay: 0.1 }}
-              className="font-display text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-[1.05] tracking-tight text-text-primary"
+              className="font-display text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-[1.1] tracking-tight text-text-primary break-words"
+              initial="hidden"
+              animate="visible"
+              variants={{
+                hidden: { opacity: 1 },
+                visible: { opacity: 1, transition: { staggerChildren: 0.06, delayChildren: 0.2 } },
+              }}
             >
-              Sri Ram{' '}
-              <span className="gradient-text">V</span>
+              <span className="block">Hey, This is</span>
+              <span className="block mt-2">
+                {'SRI RAM '}
+                <span className="gradient-text glow-text">V</span>
+              </span>
             </motion.h1>
 
-            {/* Animated Roles */}
+            {/* Role Cycler */}
             <RoleCycler />
 
             {/* Divider */}
             <motion.div
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
-              transition={{ duration: 1, delay: 0.3 }}
-              className="h-px w-24 bg-gradient-to-r from-primary to-transparent origin-left"
+              transition={{ duration: 1, delay: 0.4 }}
+              className="h-px w-24 bg-gradient-to-r from-accent to-transparent origin-left"
               aria-hidden="true"
             />
 
@@ -340,34 +432,32 @@ export default function Hero() {
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
               className="max-w-xl text-base sm:text-lg leading-relaxed text-text-secondary"
             >
               I build AI-powered automation systems, intelligent web applications, and
-              business solutions that help companies automate workflows, improve
-              productivity, and scale efficiently.
+              modern digital experiences that help businesses automate workflows and scale efficiently.
             </motion.p>
 
             {/* Buttons */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.5 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
               className="flex flex-wrap gap-4"
             >
               <a
                 href="#projects"
-                className="magnetic-btn inline-flex items-center gap-3 rounded-2xl bg-primary/10 border border-primary/30 px-7 py-3.5 font-display font-semibold text-primary backdrop-blur-xl transition-all hover:bg-primary/20 hover:shadow-[0_0_28px_rgba(6,182,212,0.25)] hover:scale-105 active:scale-95"
+                className="magnetic-btn inline-flex items-center gap-3 rounded-2xl bg-accent px-7 py-3.5 font-display font-semibold text-background transition-all hover:shadow-[0_0_32px_rgba(255,106,0,0.35)] hover:scale-105 active:scale-95"
               >
-                View My Projects
+                Explore Projects
                 <ArrowDownRight className="h-4 w-4" aria-hidden="true" />
               </a>
               <a
-                href="#"
-                className="magnetic-btn inline-flex items-center gap-3 rounded-2xl border border-white/[0.12] bg-white/[0.03] px-7 py-3.5 font-display font-semibold text-text-primary backdrop-blur-xl transition-all hover:border-primary/40 hover:bg-white/[0.06] hover:scale-105 active:scale-95"
+                href="#contact"
+                className="magnetic-btn inline-flex items-center gap-3 rounded-2xl border border-white/[0.12] bg-white/[0.03] backdrop-blur-xl px-7 py-3.5 font-display font-semibold text-text-primary transition-all hover:border-accent/40 hover:bg-accent/[0.06] hover:scale-105 active:scale-95"
               >
-                <Download className="h-4 w-4" aria-hidden="true" />
-                Download Resume
+                Let&apos;s Connect
               </a>
             </motion.div>
 
@@ -375,7 +465,7 @@ export default function Hero() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
+              transition={{ duration: 0.8, delay: 0.7 }}
               className="flex items-center gap-5 pt-2"
             >
               {socials.map((social) => (
@@ -384,7 +474,7 @@ export default function Hero() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center justify-center w-10 h-10 rounded-xl glass-card text-text-muted transition-all hover:text-primary hover:-translate-y-1"
+                  className="group flex items-center justify-center w-10 h-10 rounded-xl glass-card text-text-muted transition-all hover:text-accent hover:-translate-y-1"
                   aria-label={social.name}
                 >
                   <social.icon className="h-4 w-4 transition-transform group-hover:scale-110" aria-hidden="true" />
@@ -398,11 +488,11 @@ export default function Hero() {
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1, delay: 0.2 }}
+              transition={{ duration: 1, delay: 0.3 }}
               className="relative"
             >
               <HexFrame
-                imageUrl="https://lh3.googleusercontent.com/aida-public/AB6AXuCgcdU9Mi6FpYzHL2Q3UODmSE-fdNOke3jGZnQq9GDTx4Ot3NEwyD_5vtCigObKcH-VxO3h16EGzLrVP1ZtSjoiIFBEyxrJ6INJrRxEx453s3ZqTqQOS46wL0C_nQwZeYW19Usops_sc6viZDit0jy_JH7e1GkKuAWH1YlfyBz_B5WB6iztOqy7uwy0nImbJ6i-LHEf6r6kXxpI3uYUGkCbJNUApRcYJH8kUC6WJ-9C5JxiGgDrIeQcMulBFQONESUSLeKNtpZsPrsc"
+                imageUrl="/images/profile-portrait.png"
                 alt="Sri Ram V — AI Automation Developer"
               />
             </motion.div>
@@ -410,7 +500,6 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Scroll indicator */}
       <ScrollIndicator />
     </section>
   );
