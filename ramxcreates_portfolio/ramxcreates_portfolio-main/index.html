@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RAMXCREATES | AI Automation Portfolio</title>
+<link href="https://lh3.googleusercontent.com/aida-public/AB6AXuCqUKM_q4rHVNl8AI-zynPC-mDiNkbqFI0zwPONi4Nolnz6Z2HMcJ6u8-gK1v8dbHZFP4F-JaO_gAngzd7ziVeDiLmXhH8a8BceJbj3bt6SZMQJDV-iNuAfOMuOYV9MeqtYSOJsJu-Ak__Tg0KNfxCT7h-NNA1A9I3g28SYPY5OX1Qq39prX0o1gawwjcHqqHwT0mj00vm1evAwjjcgsPd9-KV2a6RpzfEuPQtqh2bHr9vX4EtVXuv2pYzsrRuUw0fgYxOaWI7ZnCBa" rel="icon" type="image/png"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&amp;family=Inter:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error-container": "#93000a",
+                        "primary-container": "#00e676",
+                        "on-tertiary-container": "#794810",
+                        "on-error": "#690005",
+                        "surface-container-highest": "#2e372e",
+                        "tertiary-fixed-dim": "#fdb878",
+                        "on-secondary-fixed": "#002108",
+                        "surface-variant": "#2e372e",
+                        "on-secondary-fixed-variant": "#00531f",
+                        "on-secondary-container": "#003f15",
+                        "surface-container": "#19221a",
+                        "tertiary-fixed": "#ffdcbf",
+                        "surface-bright": "#323c33",
+                        "surface-container-high": "#232c24",
+                        "secondary": "#4de171",
+                        "secondary-container": "#00b64d",
+                        "on-tertiary-fixed": "#2d1600",
+                        "on-error-container": "#ffdad6",
+                        "on-primary-container": "#00612e",
+                        "tertiary-container": "#ffba79",
+                        "inverse-on-surface": "#29332a",
+                        "background": "#0d150e",
+                        "outline": "#859585",
+                        "surface-container-lowest": "#081009",
+                        "on-surface": "#dbe5d9",
+                        "primary-fixed": "#62ff96",
+                        "on-tertiary-fixed-variant": "#6a3c03",
+                        "secondary-fixed-dim": "#4de171",
+                        "on-primary": "#003918",
+                        "primary": "#75ff9e",
+                        "surface-container-low": "#151e16",
+                        "inverse-surface": "#dbe5d9",
+                        "error": "#ffb4ab",
+                        "on-primary-fixed": "#00210b",
+                        "surface": "#0d150e",
+                        "secondary-fixed": "#6dff8b",
+                        "on-tertiary": "#4b2800",
+                        "on-surface-variant": "#bacbb9",
+                        "on-primary-fixed-variant": "#005226",
+                        "inverse-primary": "#006d35",
+                        "surface-tint": "#00e475",
+                        "surface-dim": "#0d150e",
+                        "outline-variant": "#3b4a3d",
+                        "primary-fixed-dim": "#00e475",
+                        "on-secondary": "#003913",
+                        "tertiary": "#ffdec4",
+                        "on-background": "#dbe5d9"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-desktop": "80px",
+                        "container-max": "1280px",
+                        "margin-mobile": "20px",
+                        "grid-unit": "8px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Sora"],
+                        "label-caps": ["Inter"],
+                        "display-lg-mobile": ["Sora"],
+                        "headline-sm": ["Sora"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Sora"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["64px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-caps": ["12px", {"lineHeight": "1.0", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                        "display-lg-mobile": ["40px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                        "headline-sm": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "headline-md": ["32px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #050505;
+            color: #dbe5d9;
+            overflow-x: hidden;
+        }
+        .glass-panel {
+            background: rgba(11, 15, 25, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        .glass-panel:hover {
+            border-color: rgba(0, 230, 118, 0.3);
+            box-shadow: 0 0 40px rgba(0, 230, 118, 0.15);
+        }
+        .aurora {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at 20% 30%, rgba(0, 230, 118, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 70%, rgba(0, 77, 64, 0.2) 0%, transparent 50%);
+            filter: blur(80px);
+            pointer-events: none;
+        }
+        .blueprint-grid {
+            background-image: linear-gradient(rgba(245, 247, 250, 0.05) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(245, 247, 250, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        .profile-glow {
+            box-shadow: 0 0 30px rgba(0, 230, 118, 0.4);
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        .pulse-dot {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.5; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .nav-item-active {
+            color: #75ff9e;
+            font-weight: 700;
+            border-bottom: 2px solid #75ff9e;
+            padding-bottom: 4px;
+        }
+    </style>
+</head>
+<body class="font-body-md blueprint-grid min-h-screen">
+<div class="aurora"></div>
+
+<!-- TopAppBar Navigation -->
+<header class="fixed top-0 w-full z-50 bg-background/70 backdrop-blur-xl border-b border-white/10 shadow-[0_0_40px_rgba(0,230,118,0.15)]">
+<nav class="flex justify-between items-center px-margin-mobile md:px-margin-desktop h-20 w-full max-w-container-max mx-auto">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">token</span>
+<span class="font-display-lg text-headline-sm tracking-tighter text-on-background dark:text-on-background">RAMXCREATES</span>
+</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-primary font-bold border-b-2 border-primary pb-1 font-body-md hover:text-primary transition-colors duration-300" href="#hero">Home</a>
+<a class="text-on-surface-variant font-medium font-body-md hover:text-primary transition-colors duration-300" href="#projects">Projects</a>
+<a class="text-on-surface-variant font-medium font-body-md hover:text-primary transition-colors duration-300" href="#skills">Skills</a>
+<a class="bg-primary text-on-primary px-6 py-2 rounded-full font-label-caps text-label-caps hover:scale-105 transition-transform active:scale-95" href="https://wa.me/918248261165">Contact</a>
+</div>
+<button class="md:hidden text-on-surface">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</nav>
+</header>
+<main class="pt-32 pb-20">
+<!-- Hero Section -->
+<section class="px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto mb-32" id="hero">
+<div class="flex flex-col md:flex-row items-center gap-12">
+<div class="w-full md:w-1/2 flex justify-center md:justify-start order-2 md:order-1">
+<div class="space-y-6">
+<div class="inline-flex items-center gap-3 bg-surface-container-high border border-outline-variant/30 rounded-full px-4 py-2">
+<span class="relative flex h-3 w-3">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-3 w-3 bg-primary"></span>
+</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant tracking-widest">OPEN FOR FREELANCE WORK</span>
+</div>
+<h1 class="font-display-lg text-display-lg-mobile md:text-display-lg text-on-background leading-tight">
+                            Building AI systems that <span class="text-primary">automate</span> business operations.
+                        </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
+                            Ram is an Independent AI Automation Developer &amp; Continuous Learner, dedicated to crafting production-ready systems that eliminate repetitive tasks.
+                        </p>
+<div class="flex flex-wrap gap-4 pt-4">
+<a class="bg-primary text-on-primary px-8 py-4 rounded-xl font-headline-sm text-headline-sm flex items-center gap-3 hover:shadow-[0_0_20px_rgba(117,255,158,0.4)] transition-all" href="https://wa.me/918248261165">
+                                Hire Me on WhatsApp
+                                <span class="material-symbols-outlined">arrow_forward</span>
+</a>
+<a class="border border-primary text-primary px-8 py-4 rounded-xl font-headline-sm text-headline-sm hover:bg-primary/10 transition-all" href="https://github.com/sriram162007">
+                                View GitHub
+                            </a>
+</div>
+</div>
+</div>
+<div class="w-full md:w-1/2 flex justify-center order-1 md:order-2">
+<div class="relative">
+<div class="absolute -inset-4 bg-primary/20 blur-3xl rounded-full"></div>
+<div class="relative profile-glow p-2 rounded-full border-2 border-primary/30">
+<img alt="Ram - AI Automation Developer" class="w-64 h-64 md:w-80 md:h-80 rounded-full object-cover grayscale hover:grayscale-0 transition-all duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgcdU9Mi6FpYzHL2Q3UODmSE-fdNOke3jGZnQq9GDTx4Ot3NEwyD_5vtCigObKcH-VxO3h16EGzLrVP1ZtSjoiIFBEyxrJ6INJrRxEx453s3ZqTqQOS46wL0C_nQwZeYW19Usops_sc6viZDit0jy_JH7e1GkKuAWH1YlfyBz_B5WB6iztOqy7uwy0nImbJ6i-LHEf6r6kXxpI3uYUGkCbJNUApRcYJH8kUC6WJ-9C5JxiGgDrIeQcMulBFQONESUSLeKNtpZsPrsc"/>
+</div>
+</div>
+</div>
+</div>
+<!-- Hero Stats -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-20">
+<div class="glass-panel p-6 rounded-2xl text-center">
+<div class="text-primary font-display-lg text-headline-md mb-2">3</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant">Production Projects</div>
+</div>
+<div class="glass-panel p-6 rounded-2xl text-center">
+<span class="material-symbols-outlined text-primary text-4xl mb-2">psychology</span>
+<div class="font-label-caps text-label-caps text-on-surface-variant">AI Automation Enthusiast</div>
+</div>
+<div class="glass-panel p-6 rounded-2xl text-center">
+<span class="material-symbols-outlined text-primary text-4xl mb-2">deployed_code</span>
+<div class="font-label-caps text-label-caps text-on-surface-variant">Production-Ready Systems</div>
+</div>
+<div class="glass-panel p-6 rounded-2xl text-center">
+<span class="material-symbols-outlined text-primary text-4xl mb-2">verified</span>
+<div class="font-label-caps text-label-caps text-on-surface-variant">Independent Developer</div>
+</div>
+</div>
+</section>
+<!-- About Section -->
+<section class="bg-surface-container-low py-24 mb-32 border-y border-outline-variant/10" id="about">
+<div class="px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+<div class="flex flex-col md:flex-row items-center gap-16">
+<div class="w-full md:w-1/3">
+<img alt="Ram portrait" class="w-full aspect-square object-cover rounded-2xl border border-outline-variant/30 brightness-75" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgcdU9Mi6FpYzHL2Q3UODmSE-fdNOke3jGZnQq9GDTx4Ot3NEwyD_5vtCigObKcH-VxO3h16EGzLrVP1ZtSjoiIFBEyxrJ6INJrRxEx453s3ZqTqQOS46wL0C_nQwZeYW19Usops_sc6viZDit0jy_JH7e1GkKuAWH1YlfyBz_B5WB6iztOqy7uwy0nImbJ6i-LHEf6r6kXxpI3uYUGkCbJNUApRcYJH8kUC6WJ-9C5JxiGgDrIeQcMulBFQONESUSLeKNtpZsPrsc"/>
+</div>
+<div class="w-full md:w-2/3 space-y-6">
+<h2 class="font-display-lg text-headline-md text-primary">About Ram</h2>
+<p class="font-body-lg text-body-lg text-on-surface leading-relaxed">
+                            I am a builder at heart, obsessed with the potential of AI to transform how businesses operate. My focus is on creating custom automation workflows that aren't just technical curiosities but robust, production-level tools that solve real problems. 
+                        </p>
+<p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
+                            Whether it's optimizing complex delivery routes or building voice-activated assistants, I approach every project with a commitment to continuous learning and technical excellence. My goal is to bridge the gap between cutting-edge AI research and practical, everyday business utility.
+                        </p>
+</div>
+</div>
+</div>
+</section>
+<!-- Projects Section -->
+<section class="px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto mb-32" id="projects">
+<h2 class="font-display-lg text-headline-md text-center mb-16">Case <span class="text-primary">Studies</span></h2>
+<div class="space-y-32">
+<!-- Project 1 -->
+<div class="flex flex-col gap-12">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+<div class="order-2 md:order-1 space-y-6">
+<div class="font-label-caps text-label-caps text-primary tracking-widest">N8N • WHATSAPP • GOOGLE SHEETS</div>
+<h3 class="font-display-lg text-headline-md text-on-background">WhatsApp AI Expense Tracker</h3>
+<p class="font-body-lg text-body-lg text-on-surface-variant">
+                                A voice-activated WhatsApp bot that utilizes Gemini AI to parse natural language or audio messages and automatically logs structured expense data into Google Sheets. Built with n8n for workflow orchestration.
+                            </p>
+<div class="flex gap-4">
+<span class="bg-surface-container-highest px-3 py-1 rounded text-xs font-mono text-primary">Voice-to-JSON</span>
+<span class="bg-surface-container-highest px-3 py-1 rounded text-xs font-mono text-primary">LLM Agent</span>
+</div>
+<div class="pt-4">
+<a class="inline-flex items-center gap-2 text-on-surface-variant cursor-not-allowed italic" href="#">
+<span class="material-symbols-outlined">lock</span>
+                                    Project Asset Coming Soon
+                                </a>
+</div>
+</div>
+<div class="order-1 md:order-2 glass-panel p-4 rounded-3xl group overflow-hidden">
+<div class="relative overflow-hidden rounded-2xl h-[400px]">
+<img alt="WhatsApp Expense Tracker UI" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBgAtbFYtfXzHW3vXYgQMcfvYe-i2bZUSjKFWva1LqNAe8LjXtRv8tEZaF_YSF_zQZ1MgkcHSXD85BEWR7Xp7b8ZBnvu3d_mVk9MTe-fCrConOuH3ETjSv6faZscPVQRh8dYCZb3kQh7LjcdgyW0x4Qrv7dwgsQBiYs3SIkBasE3GHbAiFmezvv1uvgl_J3uSG3GmdRmdKXi4uhCD3pe3mvnaP_Q6VOY8yq1tXW_qmwTZ3BKTq1GwsY3LafQkHRR4ZiCgk_BIM5C67c"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-60"></div>
+</div>
+</div>
+</div>
+<!-- Secondary Project Image -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="glass-panel p-4 rounded-3xl">
+<img alt="Workflow diagram" class="w-full rounded-2xl border border-white/5" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsqju10FEbMoG5-DXXSU2lagbY_Y7pVFBIGuClG5VTBBngJ3Dagpvc5FdPZByaiI5HccUpXqjJuty0vvX46QRH_YUpP5_SRJwxnD3175itarMvJ5CcnZkUw9an5e7Hwrn3xIwrNMxJfN_qM8SBNWf-sqmYkiaA0fIXkdQUVjBMNPUTcrYzbCD4gWV3gHQviffUeUcXUl_bSmvL0Trb6waXKiNJqzsCw3dcQolRwI4Gdw9KQfY-oeJdD233IDDZ9FSxT2q-ChuG-j0F"/>
+</div>
+<div class="flex flex-col justify-center space-y-4 p-8">
+<div class="flex items-start gap-4">
+<span class="material-symbols-outlined text-primary">mic</span>
+<div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface">Voice Recognition</h4>
+<p class="font-body-md text-on-surface-variant">Seamlessly transcribes audio clips sent via WhatsApp and extracts key information.</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<span class="material-symbols-outlined text-primary">table_chart</span>
+<div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface">Structured Logging</h4>
+<p class="font-body-md text-on-surface-variant">Intelligently categorizes and inputs data into designated Google Sheets columns.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Project 2 -->
+<div class="flex flex-col gap-12">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+<div class="glass-panel p-4 rounded-3xl group overflow-hidden">
+<div class="relative overflow-hidden rounded-2xl h-[400px]">
+<img alt="Milk Route Optimization UI" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA28Lk4IakZDeQCioYU3GKsEpwr-jVpuH50OCsUX95gHkhjeuCsZg9gXUk8zVv7vWL6_6PXiMiSAQ1FP06JeSXL_jAJ1TvA7HWnF1zfryW9ZRItswua_JjME94CanoKID-yrSJfEMvT7XYmJcfjOa6WlYg1AGm4HFc-I676s7hiTl8c11vrVKegghAUWaE_6-D__4m-dHGW4pbysBsT8znMFeS4CrD5gtpma-3OrT29XlVnKM8_JshN5apG5vyiCLzNjGuAC_6yWpco"/>
+</div>
+</div>
+<div class="space-y-6">
+<div class="font-label-caps text-label-caps text-secondary tracking-widest">PYTHON • N8N • ENTERPRISE LOGISTICS</div>
+<h3 class="font-display-lg text-headline-md text-on-background">Milk Delivery Route Optimization</h3>
+<p class="font-body-lg text-body-lg text-on-surface-variant">
+                                An enterprise-level system designed for high-density route planning. It manages capacity, driver allocation, and operational constraints across multiple growth scenarios. Built to scale from 400 to 5,000+ customers.
+                            </p>
+<div class="flex gap-4">
+<span class="bg-surface-container-highest px-3 py-1 rounded text-xs font-mono text-secondary">Route Planning</span>
+<span class="bg-surface-container-highest px-3 py-1 rounded text-xs font-mono text-secondary">Capacity Modeling</span>
+</div>
+</div>
+</div>
+<!-- Feature Bento Grid for Logistics Project -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="glass-panel p-6 rounded-2xl col-span-1 md:col-span-2">
+<img alt="Scenario Analysis Table" class="w-full rounded-xl border border-white/5 mb-4" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDU5ilNe53mN50c10C0USI8TsQlfJSJmlIaaRiqdzuWuQAhHdD0HLL4YjJhQadQfdsHB9lsUJmI2hDSuH5d-r3BwBJRPDTO9O4qNbeZgO9_dL0RJpezIqkp5Kw2MEoCKrY01n43pw0_JOjBCgycQrXpv7OY_LUCH3xrPZKc4rUWXTRdJ63OfRSCRGoT5EDs5iIF5_3ZjkfmJ2_hGIFPTCMrP3hl0RbkoxRADvyRmcfHEIK6h0U4Iop5yPWOq515rPFEVH5Nw5y6bG_m"/>
+<h4 class="font-headline-sm text-headline-sm text-on-surface">Growth Scenarios</h4>
+<p class="text-on-surface-variant">Predictive capacity planning for phased scaling.</p>
+</div>
+<div class="glass-panel p-6 rounded-2xl flex flex-col justify-between">
+<img alt="Risk analysis" class="w-full rounded-xl border border-white/5 mb-4 grayscale" src="https://lh3.googleusercontent.com/aida-public/AB6AXuASPayAZUrzTUS1wt6VHn3wFdcpJYqltg9aXmXp59E4Jf5kai1RTAA-5Js2tSupPpgBaEhz5_t8XvvBO90Wiy78iJKjZF1qb6c-etymQv824vzHfdbGY9ShfZvd6FzBNKty06r1OEyswkC3aaLotQecl03hZxQJy1q8RkX157LoEe7kjjsGjvodB_-VaNCq3p1PR6DILfVUvY68OCF7FKtLgrHLE07g5f35_qNIIwEJl0meZn22i4MtG1e0-u79cuuNQ__hYXVmm6t4"/>
+<div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface">Operational Risks</h4>
+<p class="text-on-surface-variant">Identifying bottlenecks in South Chennai depots.</p>
+</div>
+</div>
+<div class="glass-panel p-6 rounded-2xl">
+<img alt="Fleet sizing chart" class="w-full rounded-xl border border-white/5 mb-4" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAX3WXbKj7y-755yQyWEhq_FosCdvxRzyvTFszirOmFIE0wNOKRtUFmcr45I30yMYSmC8sbac1cugz5jjkDSVD2nWg7JdM4tBySqXV6jW3TMeKMSql9eFuv8tmZwvPXTf1FfDoRjdzlS44VJlAPWcxa7qXKvrCPZrF6iG3bWOg_Cs7mLBPs38neKcl-WtUlbEdmmd617kI-7gCngurJNKCm7JHXNKvz-eoje2SCk_lsQXKmMen5RtYLEE-pmNZPeuCFRpKIP6oUc6uL"/>
+<h4 class="font-headline-sm text-headline-sm text-on-surface">Fleet Sizing</h4>
+<p class="text-on-surface-variant">Optimizing supervisor-to-rider ratios.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Tech Stack Section -->
+<section class="bg-surface-container py-24 border-t border-outline-variant/10" id="skills">
+<div class="px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto text-center">
+<h2 class="font-display-lg text-headline-md mb-16">The <span class="text-primary">Engine Room</span></h2>
+<div class="flex flex-wrap justify-center gap-6 max-w-4xl mx-auto">
+<!-- Tech Badges -->
+<div class="glass-panel px-6 py-4 rounded-xl flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">terminal</span>
+<span class="font-body-lg font-bold">Python</span>
+</div>
+<div class="glass-panel px-6 py-4 rounded-xl flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">hub</span>
+<span class="font-body-lg font-bold">n8n</span>
+</div>
+<div class="glass-panel px-6 py-4 rounded-xl flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">api</span>
+<span class="font-body-lg font-bold">REST APIs</span>
+</div>
+<div class="glass-panel px-6 py-4 rounded-xl flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">psychology_alt</span>
+<span class="font-body-lg font-bold">Gemini AI</span>
+</div>
+<div class="glass-panel px-6 py-4 rounded-xl flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">javascript</span>
+<span class="font-body-lg font-bold">JavaScript</span>
+</div>
+<div class="glass-panel px-6 py-4 rounded-xl flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">code</span>
+<span class="font-body-lg font-bold">HTML5 / CSS3</span>
+</div>
+<div class="glass-panel px-6 py-4 rounded-xl flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">table_chart</span>
+<span class="font-body-lg font-bold">Google Sheets</span>
+</div>
+<div class="glass-panel px-6 py-4 rounded-xl flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">settings_phone</span>
+<span class="font-body-lg font-bold">Twilio</span>
+</div>
+<div class="glass-panel px-6 py-4 rounded-xl flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">account_tree</span>
+<span class="font-body-lg font-bold">Git &amp; GitHub</span>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto my-32 text-center">
+<div class="glass-panel p-12 md:p-24 rounded-[40px] relative overflow-hidden group">
+<div class="absolute inset-0 bg-primary/5 group-hover:bg-primary/10 transition-colors"></div>
+<div class="relative z-10 space-y-8">
+<h2 class="font-display-lg text-headline-md md:text-display-lg text-on-background">Ready to automate?</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">
+                        I'm currently accepting new projects. If you have a business workflow that needs intelligence and automation, let's talk.
+                    </p>
+<div class="flex flex-col md:flex-row justify-center items-center gap-6 pt-8">
+<a class="w-full md:w-auto bg-primary text-on-primary px-12 py-5 rounded-2xl font-headline-sm text-headline-sm shadow-[0_0_50px_rgba(0,230,118,0.3)] hover:scale-105 transition-all" href="https://wa.me/918248261165">
+                            Hire Me on WhatsApp
+                        </a>
+<div class="flex gap-4">
+<a class="glass-panel p-4 rounded-2xl flex items-center gap-2 hover:bg-surface-container-highest transition-colors" href="mailto:ramxcreates@gmail.com">
+<span class="material-symbols-outlined text-primary">mail</span>
+                                Email Me
+                            </a>
+<a class="glass-panel p-4 rounded-2xl flex items-center gap-2 hover:bg-surface-container-highest transition-colors" href="https://github.com/sriram162007">
+<span class="material-symbols-outlined text-primary">terminal</span>
+                                GitHub
+                            </a>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest border-t border-outline-variant/20">
+<div class="flex flex-col md:flex-row justify-between items-center gap-grid-unit py-12 px-margin-mobile md:px-margin-desktop w-full max-w-container-max mx-auto">
+<div class="flex items-center gap-2">
+<span class="font-display-lg text-headline-sm text-primary">RAMXCREATES</span>
+</div>
+<div class="flex gap-8">
+<a class="text-on-surface-variant font-medium hover:text-secondary-fixed transition-all duration-200 hover:-translate-y-[2px]" href="https://github.com/sriram162007">GitHub</a>
+<a class="text-on-surface-variant font-medium hover:text-secondary-fixed transition-all duration-200 hover:-translate-y-[2px]" href="https://wa.me/918248261165">WhatsApp</a>
+<a class="text-on-surface-variant font-medium hover:text-secondary-fixed transition-all duration-200 hover:-translate-y-[2px]" href="mailto:ramxcreates@gmail.com">Email</a>
+</div>
+<p class="font-body-md text-on-surface-variant">© 2026 RAMXCREATES. All Rights Reserved.</p>
+</div>
+</footer>
+<script>
+        // Subtle Mouse parallax for Aurora
+        document.addEventListener('mousemove', (e) => {
+            const aurora = document.querySelector('.aurora');
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            aurora.style.transform = `translate(${x * 50}px, ${y * 50}px)`;
+        });
+
+        // Intersection Observer for fade-in effects
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                    entry.target.classList.remove('opacity-0', 'translate-y-10');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section > div').forEach(div => {
+            div.classList.add('transition-all', 'duration-1000', 'opacity-0', 'translate-y-10');
+            observer.observe(div);
+        });
+    </script>
+</body></html>
