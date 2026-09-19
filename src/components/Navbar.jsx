@@ -1,202 +1,335 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { Menu, X, ArrowUpRight } from 'lucide-react';
+import { useState, useEffect, useCallback } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
-const navLinks = [
-  { name: 'Home', href: '#hero' },
-  { name: 'About', href: '#about' },
-  { name: 'Projects', href: '#projects' },
-  { name: 'Skills', href: '#skills' },
-  { name: 'Services', href: '#services' },
-  { name: 'Contact', href: '#contact' },
+const NAV_LINKS = [
+  { label: 'ABOUT', href: '#about' },
+  { label: 'SERVICES', href: '#services' },
+  { label: 'WORK', href: '#work' },
+  { label: 'SKILLS', href: '#skills' },
+  { label: 'CONTACT', href: '#contact' },
 ];
 
-export default function Navbar() {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileOpen, setIsMobileOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('hero');
-
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const springX = useSpring(mouseX, { damping: 30, mass: 0.5 });
-  const springY = useSpring(mouseY, { damping: 30, mass: 0.5 });
-  const glowX = useTransform(springX, (v) => (v / window.innerWidth) * 100 - 150);
-  const glowY = useTransform(springY, (v) => (v / window.innerHeight) * 100 - 150);
+function useActiveSection() {
+  const [active, setActive] = useState('');
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 40);
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    const sectionIds = NAV_LINKS.map((l) => l.href.replace('#', ''));
+    const observers = [];
 
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      mouseX.set(e.clientX);
-      mouseY.set(e.clientY);
-    };
-    window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, [mouseX, mouseY]);
-
-  useEffect(() => {
-    const sectionIds = navLinks.map((l) => l.href.replace('#', ''));
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
-          }
-        });
-      },
-      { rootMargin: '-80px 0px -60% 0px', threshold: 0 }
-    );
     sectionIds.forEach((id) => {
       const el = document.getElementById(id);
-      if (el) observer.observe(el);
+      if (!el) return;
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) setActive(id);
+        },
+        { rootMargin: '-30% 0px -60% 0px' }
+      );
+      observer.observe(el);
+      observers.push(observer);
     });
-    return () => observer.disconnect();
+
+    return () => observers.forEach((o) => o.disconnect());
+  }, []);
+
+  return active;
+}
+
+export default function Navbar() {
+  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const active = useActiveSection();
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  const handleNavClick = useCallback((href) => {
+    setMenuOpen(false);
+    setTimeout(() => {
+      const el = document.querySelector(href);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }, 100);
   }, []);
 
   return (
-    <motion.header
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled
-          ? 'bg-background/90 backdrop-blur-2xl border-b border-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.5)]'
-          : 'bg-transparent'
-      }`}
-    >
-      <motion.div
-        className="absolute inset-0 pointer-events-none overflow-hidden"
-        aria-hidden="true"
+    <>
+      <motion.nav
+        initial={{ y: -24, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+        className={`main-navbar ${scrolled ? 'is-scrolled' : ''}`}
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 100,
+          borderBottom: scrolled ? '1px solid var(--color-border)' : '1px solid transparent',
+          backdropFilter: scrolled ? 'blur(20px)' : 'none',
+          backgroundColor: scrolled ? 'rgba(5,5,5,0.94)' : 'rgba(5,5,5,0.6)',
+          transition: 'background-color 0.3s ease, border-color 0.3s ease, backdrop-filter 0.3s ease',
+        }}
+        aria-label="Main navigation"
       >
-        <motion.div
-          className="absolute w-[300px] h-[300px] rounded-full bg-accent/5 blur-[100px]"
-          style={{
-            x: glowX,
-            y: glowY,
-          }}
-        />
-      </motion.div>
-
-      <nav
-        className="relative mx-auto flex h-20 max-w-7xl items-center justify-between px-6 sm:px-10 lg:px-16"
-        aria-label="Primary navigation"
-      >
-        <a
-          href="#hero"
-          className="relative flex items-center gap-2.5 font-display text-lg font-bold tracking-tight text-text-primary transition-colors hover:text-accent"
-          aria-label="RAMXCREATES home"
+        <div
+          className="container"
+          style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 68 }}
         >
-          <span className="relative flex h-3 w-3">
-            <span className="absolute inline-flex h-full w-full rounded-full bg-accent opacity-75 animate-ping" />
-            <span className="relative inline-flex rounded-full h-3 w-3 bg-accent" />
-          </span>
-          RAMXCREATES
-        </a>
-
-        <div className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className={`relative px-3 py-2 text-sm font-medium tracking-wide transition-colors duration-300 ${
-                activeSection === link.href.replace('#', '')
-                  ? 'text-accent'
-                  : 'text-text-muted hover:text-text-secondary'
-              }`}
-            >
-              {link.name}
-              <span
-                className={`absolute bottom-0 left-1/2 h-[2px] rounded-full bg-accent transition-all duration-300 -translate-x-1/2 ${
-                  activeSection === link.href.replace('#', '')
-                    ? 'w-full shadow-[0_0_10px_rgba(255,106,0,0.6)]'
-                    : 'w-0 hover:w-full'
-                }`}
-                aria-hidden="true"
-              />
-            </a>
-          ))}
+          {/* Logo */}
           <a
-            href="#contact"
-            className="magnetic-btn ml-2 inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-background transition-all hover:shadow-[0_0_28px_rgba(255,106,0,0.4)] hover:scale-105 active:scale-95"
+            href="#hero"
+            onClick={(e) => { e.preventDefault(); handleNavClick('#hero'); }}
+            style={{
+              fontFamily: 'var(--font-display)',
+              fontSize: 15,
+              fontWeight: 800,
+              letterSpacing: '0.06em',
+              color: 'var(--color-text-1)',
+              textDecoration: 'none',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 6,
+            }}
+            aria-label="Sri Ram — home"
           >
-            Let&apos;s Talk
-            <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+            SRI RAM
+            <span
+              aria-hidden="true"
+              style={{
+                width: 5,
+                height: 5,
+                borderRadius: '50%',
+                background: 'var(--color-red)',
+                display: 'inline-block',
+                flexShrink: 0,
+                boxShadow: '0 0 8px rgba(225,6,0,0.6)',
+              }}
+            />
           </a>
-        </div>
 
-        <button
-          className="md:hidden flex items-center justify-center rounded-lg p-2 text-text-muted transition-colors hover:text-accent"
-          onClick={() => setIsMobileOpen(!isMobileOpen)}
-          aria-expanded={isMobileOpen}
-          aria-label="Toggle navigation menu"
-        >
-          <AnimatePresence mode="wait">
-            {isMobileOpen ? (
-              <motion.span
-                key="x"
-                initial={{ rotate: -90, opacity: 0 }}
-                animate={{ rotate: 0, opacity: 1 }}
-                exit={{ rotate: 90, opacity: 0 }}
-                transition={{ duration: 0.2 }}
-              >
-                <X className="h-6 w-6" />
-              </motion.span>
-            ) : (
-              <motion.span
-                key="menu"
-                initial={{ rotate: 90, opacity: 0 }}
-                animate={{ rotate: 0, opacity: 1 }}
-                exit={{ rotate: -90, opacity: 0 }}
-                transition={{ duration: 0.2 }}
-              >
-                <Menu className="h-6 w-6" />
-              </motion.span>
-            )}
-          </AnimatePresence>
-        </button>
-      </nav>
-
-      <AnimatePresence>
-        {isMobileOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
-            className="md:hidden bg-background/95 backdrop-blur-2xl border-b border-white/[0.08]"
+          {/* Desktop Nav Links */}
+          <ul
+            style={{ display: 'flex', gap: 36, listStyle: 'none', alignItems: 'center' }}
+            className="nav-desktop"
+            role="list"
           >
-            <div className="flex flex-col gap-1 px-6 py-6">
-              {navLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setIsMobileOpen(false)}
-                  className={`rounded-lg px-4 py-3 text-base font-medium transition-colors ${
-                    activeSection === link.href.replace('#', '')
-                      ? 'text-accent bg-accent/[0.06]'
-                      : 'text-text-muted hover:text-text-secondary hover:bg-white/[0.04]'
-                  }`}
-                >
-                  {link.name}
-                </a>
-              ))}
+            {NAV_LINKS.map(({ label, href }) => {
+              const sectionId = href.replace('#', '');
+              const isActive = active === sectionId;
+              return (
+                <li key={label}>
+                  <a
+                    href={href}
+                    onClick={(e) => { e.preventDefault(); handleNavClick(href); }}
+                    style={{
+                      fontFamily: 'var(--font-body)',
+                      fontSize: 11,
+                      fontWeight: 600,
+                      letterSpacing: '0.16em',
+                      color: isActive ? 'var(--color-text-1)' : 'var(--color-text-3)',
+                      transition: 'color 0.2s ease',
+                      position: 'relative',
+                      paddingBottom: 2,
+                      textDecoration: 'none',
+                    }}
+                    className="nav-link"
+                    aria-current={isActive ? 'page' : undefined}
+                  >
+                    {label}
+                    {isActive && (
+                      <motion.span
+                        layoutId="nav-indicator"
+                        style={{
+                          position: 'absolute',
+                          bottom: -2,
+                          left: 0,
+                          right: 0,
+                          height: 1,
+                          background: 'var(--color-red)',
+                        }}
+                      />
+                    )}
+                  </a>
+                </li>
+              );
+            })}
+
+            {/* CTA button + 3x3 dots menu */}
+            <li style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
               <a
                 href="#contact"
-                onClick={() => setIsMobileOpen(false)}
-                className="mt-2 flex items-center justify-center gap-2 rounded-full bg-accent px-6 py-3 text-center font-semibold text-background"
+                id="nav-cta"
+                onClick={(e) => { e.preventDefault(); handleNavClick('#contact'); }}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 6,
+                  padding: '7px 18px',
+                  border: '1px solid rgba(255,255,255,0.22)',
+                  borderRadius: 999,
+                  fontFamily: 'var(--font-body)',
+                  fontSize: 11.5,
+                  fontWeight: 600,
+                  letterSpacing: '0.04em',
+                  color: 'var(--color-text-1)',
+                  textDecoration: 'none',
+                  transition: 'border-color 0.2s ease, background 0.2s ease',
+                  whiteSpace: 'nowrap',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = 'var(--color-red)';
+                  e.currentTarget.style.background = 'rgba(225,6,0,0.08)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.22)';
+                  e.currentTarget.style.background = 'transparent';
+                }}
               >
-                Let&apos;s Talk
-                <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                Let's Talk
+                <span style={{ fontSize: 13, marginLeft: 2 }}>↗</span>
+              </a>
+
+              {/* 3x3 grid dots icon */}
+              <div
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(3, 3px)',
+                  gap: 3,
+                  cursor: 'pointer',
+                  padding: 4,
+                  opacity: 0.7,
+                  transition: 'opacity 0.2s ease',
+                }}
+                title="Menu"
+                onMouseEnter={(e) => { e.currentTarget.style.opacity = '1'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.opacity = '0.7'; }}
+              >
+                {[...Array(9)].map((_, i) => (
+                  <span
+                    key={i}
+                    style={{
+                      width: 3,
+                      height: 3,
+                      borderRadius: '50%',
+                      background: '#fff',
+                      display: 'block',
+                    }}
+                  />
+                ))}
+              </div>
+            </li>
+          </ul>
+
+          {/* Mobile Hamburger */}
+          <button
+            onClick={() => setMenuOpen((v) => !v)}
+            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={menuOpen}
+            className="nav-hamburger"
+            style={{ display: 'flex', flexDirection: 'column', gap: 5, padding: '8px', cursor: 'pointer' }}
+          >
+            <motion.span
+              animate={menuOpen ? { rotate: 45, y: 7 } : { rotate: 0, y: 0 }}
+              transition={{ duration: 0.25 }}
+              style={{ display: 'block', width: 22, height: 1.5, background: 'var(--color-text-1)', transformOrigin: 'center' }}
+            />
+            <motion.span
+              animate={menuOpen ? { opacity: 0, scaleX: 0 } : { opacity: 1, scaleX: 1 }}
+              transition={{ duration: 0.2 }}
+              style={{ display: 'block', width: 22, height: 1.5, background: 'var(--color-text-1)' }}
+            />
+            <motion.span
+              animate={menuOpen ? { rotate: -45, y: -7 } : { rotate: 0, y: 0 }}
+              transition={{ duration: 0.25 }}
+              style={{ display: 'block', width: 22, height: 1.5, background: 'var(--color-text-1)', transformOrigin: 'center' }}
+            />
+          </button>
+        </div>
+      </motion.nav>
+
+      {/* Mobile Menu Overlay */}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.3 }}
+            style={{
+              position: 'fixed',
+              top: 68,
+              left: 0,
+              right: 0,
+              zIndex: 99,
+              background: 'rgba(5,5,5,0.97)',
+              backdropFilter: 'blur(20px)',
+              borderBottom: '1px solid var(--color-border)',
+              padding: '32px 24px 40px',
+            }}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Mobile navigation"
+          >
+            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 8 }}>
+              {NAV_LINKS.map(({ label, href }, i) => (
+                <motion.li
+                  key={label}
+                  initial={{ opacity: 0, x: -12 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.06, duration: 0.3 }}
+                >
+                  <a
+                    href={href}
+                    onClick={(e) => { e.preventDefault(); handleNavClick(href); }}
+                    style={{
+                      display: 'block',
+                      padding: '14px 0',
+                      borderBottom: '1px solid var(--color-border-2)',
+                      fontFamily: 'var(--font-display)',
+                      fontSize: 28,
+                      fontWeight: 700,
+                      color: active === href.replace('#', '') ? 'var(--color-red)' : 'var(--color-text-1)',
+                      letterSpacing: '-0.02em',
+                      transition: 'color 0.2s ease',
+                      textDecoration: 'none',
+                    }}
+                  >
+                    {label}
+                  </a>
+                </motion.li>
+              ))}
+            </ul>
+
+            <div style={{ marginTop: 32, display: 'flex', gap: 16 }}>
+              <a href="mailto:ramxcreates@gmail.com" className="label" style={{ color: 'var(--color-text-3)' }}>
+                EMAIL
+              </a>
+              <span className="label" style={{ color: 'var(--color-border)' }}>·</span>
+              <a href="https://linkedin.com/in/sri-ram16" target="_blank" rel="noopener noreferrer" className="label" style={{ color: 'var(--color-text-3)' }}>
+                LINKEDIN
               </a>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.header>
+
+      <style>{`
+        @media (min-width: 768px) {
+          .nav-hamburger { display: none !important; }
+          .nav-desktop { display: flex !important; }
+        }
+        @media (max-width: 767px) {
+          .nav-hamburger { display: flex !important; }
+          .nav-desktop { display: none !important; }
+          .main-navbar { opacity: 1 !important; pointer-events: auto !important; transform: none !important; }
+        }
+        .nav-link:hover {
+          color: var(--color-text-1) !important;
+        }
+      `}</style>
+    </>
   );
 }
-

@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" fill="none">
+  <rect width="1200" height="675" fill="#111111"/>
+  <rect x="80" y="80" width="1040" height="515" rx="24" fill="#151515" stroke="rgba(34,197,94,0.1)" stroke-width="1"/>
+  
+  <rect x="120" y="120" width="320" height="435" rx="16" fill="#0d0d0d" stroke="rgba(34,197,94,0.08)" stroke-width="1"/>
+  
+  <rect x="160" y="160" width="240" height="240" rx="8" fill="#080808" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+  
+  <path d="M180 180h40v40h-40zM230 180h40v40h-40zM280 180h40v40h-40zM180 230h40v40h-40zM230 230h40v40h-40zM280 230h40v40h-40zM180 280h40v40h-40zM230 280h40v40h-40zM280 280h40v40h-40zM180 330h120v40h-120zM180 380h120v40h-120zM180 430h120v40h-120z" fill="#22C55E"/>
+  
+  <circle cx="460" cy="280" r="70" fill="none" stroke="rgba(34,197,94,0.15)" stroke-width="2"/>
+  <path d="M430 250h60v60h-60z" fill="#22C55E"/>
+  <path d="M420 240h80v80h-80z" fill="#22C55E" opacity="0.3"/>
+  
+  <path d="M460 160v40M460 350v40M420 280h40M490 280h40" stroke="rgba(34,197,94,0.2)" stroke-width="1.5"/>
+  <circle cx="460" cy="280" r="110" fill="none" stroke="rgba(34,197,94,0.05)" stroke-width="1" stroke-dasharray="6 6"/>
+  
+  <rect x="530" y="120" width="580" height="120" rx="12" fill="#0d0d0d" stroke="rgba(34,197,94,0.1)" stroke-width="1"/>
+  <rect x="550" y="150" width="120" height="24" rx="4" fill="rgba(34,197,94,0.15)"/>
+  <rect x="550" y="185" width="480" height="14" rx="2" fill="rgba(255,255,255,0.08)"/>
+  <rect x="550" y="205" width="400" height="14" rx="2" fill="rgba(255,255,255,0.05)"/>
+  
+  <rect x="530" y="260" width="580" height="80" rx="12" fill="#0d0d0d" stroke="rgba(34,197,94,0.1)" stroke-width="1"/>
+  <rect x="550" y="275" width="320" height="16" rx="2" fill="rgba(34,197,94,0.3)"/>
+  <rect x="550" y="300" width="240" height="16" rx="2" fill="rgba(255,255,255,0.08)"/>
+  
+  <rect x="530" y="370" width="580" height="230" rx="12" fill="#0d0d0d" stroke="rgba(34,197,94,0.1)" stroke-width="1"/>
+  
+  <rect x="550" y="390" width="160" height="24" rx="4" fill="rgba(34,197,94,0.15)"/>
+  <rect x="550" y="425" width="530" height="12" rx="2" fill="rgba(255,255,255,0.05)"/>
+  <rect x="550" y="445" width="530" height="12" rx="2" fill="rgba(255,255,255,0.05)"/>
+  <rect x="550" y="465" width="480" height="12" rx="2" fill="rgba(255,255,255,0.05)"/>
+  <rect x="550" y="485" width="400" height="12" rx="2" fill="rgba(255,255,255,0.05)"/>
+  
+  <rect x="780" y="510" width="80" height="80" rx="8" fill="#080808" stroke="rgba(34,197,94,0.2)" stroke-width="1"/>
+  <rect x="800" y="530" width="20" height="4" rx="1" fill="#22C55E" opacity="0.5"/>
+  <rect x="800" y="540" width="12" height="4" rx="1" fill="#22C55E" opacity="0.5"/>
+  <rect x="816" y="560" width="8" height="8" rx="1" fill="#22C55E"/>
+  <rect x="832" y="538" width="4" height="4" rx="1" fill="#22C55E" opacity="0.5"/>
+  
+  <rect x="900" y="390" width="80" height="80" rx="8" fill="#080808" stroke="rgba(34,197,94,0.2)" stroke-width="1"/>
+  <path d="M940 430l-8 8v-16l8 8z" fill="#22C55E"/>
+  <rect x="908" y="424" width="24" height="4" rx="1" fill="#22C55E" opacity="0.3"/>
+  
+  <text x="700" y="60" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="14" font-weight="600" fill="rgba(34,197,94,0.6)">AI-Powered Diagnosis</text>
+  <text x="700" y="40" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" fill="rgba(255,255,255,0.3)">Scan • Diagnose • Resolve</text>
+</svg>

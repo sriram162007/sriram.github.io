@@ -1,5 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
-import SectionHeader from './SectionHeader';
+import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Bot, Code2, Lightbulb, GraduationCap } from 'lucide-react';
 
@@ -41,128 +40,69 @@ const timeline = [
   },
 ];
 
-const stats = [
-  { value: 3, suffix: '+', label: 'Projects Built' },
-  { value: 15, suffix: '+', label: 'Technologies Explored' },
-  { value: null, suffix: '', label: 'Current Focus', text: 'AI Automation' },
-  { value: null, suffix: '', label: 'Learning Status', text: 'Building Every Day' },
-];
+const container = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1, delayChildren: 0.2 },
+  },
+};
 
-function AnimatedCounter({ value, suffix, text }) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-40px' });
-  const [display, setDisplay] = useState(0);
-
-  useEffect(() => {
-    if (isInView && value !== null) {
-      const duration = 1500;
-      const startTime = performance.now();
-      const animate = (currentTime) => {
-        const elapsed = currentTime - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        const eased = 1 - Math.pow(1 - progress, 3);
-        setDisplay(Math.round(eased * value));
-        if (progress < 1) {
-          requestAnimationFrame(animate);
-        }
-      };
-      const raf = requestAnimationFrame(animate);
-      return () => cancelAnimationFrame(raf);
-    }
-  }, [isInView, value]);
-
-  return (
-    <div ref={ref} className="text-center">
-      {value !== null ? (
-        <motion.div className="font-display text-4xl font-bold text-accent">
-          <motion.span>{display}</motion.span>
-          {suffix}
-        </motion.div>
-      ) : (
-        <div className="font-display text-lg font-bold text-accent">{text}</div>
-      )}
-    </div>
-  );
-}
+const item = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0 },
+};
 
 export default function About() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-80px' });
+
   return (
-    <section id="about" className="relative py-32 overflow-hidden" aria-labelledby="about-heading">
-      <div className="absolute inset-0 bg-secondary-bg/60" aria-hidden="true" />
-      <div
-        className="glow-blob bg-accent/10 w-[500px] h-[500px] top-20 -right-40 opacity-40"
-        aria-hidden="true"
-      />
-      <div
-        className="glow-blob bg-accent/10 w-[400px] h-[400px] bottom-20 -left-20 opacity-30"
-        aria-hidden="true"
-      />
-
-      <div
-        className="absolute inset-0 pointer-events-none opacity-[0.03]"
-        style={{
-          backgroundImage:
-            'linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)',
-          backgroundSize: '60px 60px',
-          maskImage: 'radial-gradient(circle at center, black 30%, transparent 80%)',
-          WebkitMaskImage: 'radial-gradient(circle at center, black 30%, transparent 80%)',
-        }}
-        aria-hidden="true"
-      />
-
-      <div className="relative mx-auto max-w-7xl px-6 lg:px-12">
+    <section
+      id="about"
+      className="relative bg-light-bg py-24 sm:py-32"
+      aria-labelledby="about-heading"
+      ref={ref}
+    >
+      <div className="mx-auto max-w-7xl px-6 lg:px-12">
         {/* Section Header */}
-        <SectionHeader
-          badge="About Me"
-          title={<>A glimpse into my <span className="gradient-text">journey</span></>}
-          subtitle="A glimpse into my journey, what I build, and the mindset that drives my work."
-          headingId="about-heading"
-        />
-
-        {/* Split Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center mb-24">
-          {/* Left - Image */}
-          <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 1 }}
-            className="flex justify-center"
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? 'visible' : 'hidden'}
+          variants={container}
+          className="text-center mb-20"
+        >
+          <motion.span
+            variants={item}
+            className="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.3em] uppercase text-text-muted mb-6"
           >
-            <div className="relative">
-              <div
-                className="absolute inset-[-4px] rounded-3xl bg-accent/20 blur-lg"
-                aria-hidden="true"
-              />
-              <div className="relative rounded-3xl border border-accent/20 overflow-hidden glass-card p-1.5">
-                <div className="rounded-[22px] overflow-hidden aspect-square">
-                  <img
-                    src="/images/profile-portrait.png"
-                    alt="Sri Ram V — AI Automation Developer portrait"
-                    width={400}
-                    height={400}
-                    loading="lazy"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              </div>
-              <div className="absolute -top-4 -right-4 w-6 h-6 rounded-full bg-accent/60 animate-pulse" aria-hidden="true" />
-              <div className="absolute -bottom-3 -left-3 w-4 h-4 rounded-full bg-accent/50 animate-pulse" style={{ animationDelay: '0.5s' }} aria-hidden="true" />
-            </div>
-          </motion.div>
-
-          {/* Right - Story text */}
-          <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 0.9, delay: 0.2 }}
-            className="space-y-6"
+            About Me
+          </motion.span>
+          <motion.h2
+            id="about-heading"
+            variants={item}
+            className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-text-light mb-6"
           >
-            <h3 className="font-display text-3xl sm:text-4xl font-bold text-text-primary">
-              Who I <span className="gradient-text">Am</span>
+            A glimpse into my <span className="text-accent">journey</span>
+          </motion.h2>
+          <motion.p variants={item} className="max-w-2xl mx-auto text-lg text-text-secondary">
+            A glimpse into my journey, what I build, and the mindset that drives my work.
+          </motion.p>
+        </motion.div>
+
+        {/* Split Layout: Image Right, Content Left */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={isInView ? 'visible' : 'hidden'}
+          variants={container}
+          className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start mb-24"
+        >
+          {/* LEFT - Story text */}
+          <motion.div variants={item} className="space-y-8">
+            <h3 className="font-display text-3xl sm:text-4xl font-bold text-text-light">
+              Who I <span className="text-accent">Am</span>
             </h3>
-            <div className="space-y-5 text-base sm:text-lg leading-relaxed text-text-secondary">
+            <div className="space-y-5 text-lg leading-relaxed text-text-secondary max-w-prose">
               <p>
                 I didn&apos;t start with years of experience or a long list of projects. I started by being curious about how technology works.
               </p>
@@ -174,71 +114,90 @@ export default function About() {
               </p>
             </div>
 
-            <div className="grid grid-cols-2 gap-4 pt-4">
-              {stats.slice(0, 4).map((stat, i) => (
-                <motion.div
-                  key={stat.label}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: i * 0.1 }}
-                  className="glass-card p-4 text-center"
-                >
-                  <AnimatedCounter value={stat.value} suffix={stat.suffix} text={stat.text} />
-                  <p className="text-xs text-text-muted mt-1">{stat.label}</p>
-                </motion.div>
-              ))}
+            {/* Stats - clean typography */}
+            <div className="grid grid-cols-2 gap-4 pt-6">
+              <div>
+                <span className="font-display text-4xl font-bold text-accent">3+</span>
+                <span className="block text-sm text-text-muted mt-1">Projects Built</span>
+              </div>
+              <div>
+                <span className="font-display text-4xl font-bold text-accent">15+</span>
+                <span className="block text-sm text-text-muted mt-1">Technologies Explored</span>
+              </div>
+              <div>
+                <span className="font-display text-lg font-bold text-accent">AI Automation</span>
+                <span className="block text-sm text-text-muted mt-1">Current Focus</span>
+              </div>
+              <div>
+                <span className="font-display text-lg font-bold text-accent">Every Day</span>
+                <span className="block text-sm text-text-muted mt-1">Learning Status</span>
+              </div>
             </div>
           </motion.div>
-        </div>
 
-        {/* Highlight Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-24">
-          {highlights.map((item, i) => (
+          {/* RIGHT - Portrait */}
+          <motion.div
+            variants={item}
+            className="relative flex justify-center"
+          >
+            <div className="relative w-full max-w-[420px]">
+              <img
+                src="/images/profile-portrait.png"
+                alt="Sri Ram V — AI Automation Developer portrait"
+                className="w-full h-auto grayscale contrast-110 brightness-105"
+                loading="lazy"
+                style={{ imageRendering: 'crispEdges' }}
+              />
+            </div>
+          </motion.div>
+        </motion.div>
+
+        {/* Highlights - clean editorial grid */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={isInView ? 'visible' : 'hidden'}
+          variants={container}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-24"
+        >
+          {highlights.map((item) => (
             <motion.div
               key={item.title}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: '-80px' }}
-              transition={{ duration: 0.7, delay: i * 0.1 }}
-              whileHover={{ y: -8 }}
-              className="glass-card p-6 sm:p-8 group cursor-default"
+              variants={item}
+              className="flex flex-col text-center"
             >
-              <div className="w-12 h-12 rounded-2xl bg-accent/10 flex items-center justify-center mb-5 text-accent group-hover:scale-110 group-hover:bg-accent/20 transition-all duration-300">
+              <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center mb-5 text-accent mx-auto">
                 <item.icon className="h-6 w-6" aria-hidden="true" />
               </div>
-              <h4 className="font-display text-lg font-bold text-text-primary mb-2">
+              <h4 className="font-display text-lg font-bold text-text-light mb-2">
                 {item.title}
               </h4>
-              <p className="text-sm leading-relaxed text-text-muted">
+              <p className="text-sm leading-relaxed text-text-secondary">
                 {item.description}
               </p>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
 
-        {/* My Journey Timeline */}
+        {/* Journey Timeline */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-40px' }}
-          transition={{ duration: 0.8 }}
+          animate={isInView ? 'visible' : 'hidden'}
+          variants={item}
           className="mb-24"
         >
-          <h3 className="font-display text-3xl sm:text-4xl font-bold text-text-primary text-center mb-16">
-            My <span className="gradient-text">Journey</span>
+          <h3 className="font-display text-3xl sm:text-4xl font-bold text-text-light text-center mb-16">
+            My <span className="text-accent">Journey</span>
           </h3>
 
           <div className="relative max-w-3xl mx-auto">
-            <div className="absolute left-6 sm:left-8 top-0 bottom-0 w-px bg-gradient-to-b from-accent/40 via-accent/20 to-transparent" aria-hidden="true" />
+            <div className="absolute left-6 sm:left-8 top-0 bottom-0 w-px bg-text-muted/20" aria-hidden="true" />
 
-            <div className="space-y-12">
+            <div className="space-y-16">
               {timeline.map((item, i) => (
                 <motion.div
                   key={item.year}
                   initial={{ opacity: 0, x: -30 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, margin: '-60px' }}
+                  animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
                   transition={{ duration: 0.7, delay: i * 0.15 }}
                   className="relative flex gap-6 sm:gap-8"
                 >
@@ -250,7 +209,7 @@ export default function About() {
                     </div>
                   </div>
 
-                  <div className="glass-card p-5 sm:p-6 flex-1 group hover:border-accent/20 transition-all duration-300">
+                  <div className="flex-1">
                     <p className="text-sm sm:text-base leading-relaxed text-text-secondary">
                       {item.text}
                     </p>
@@ -264,4 +223,3 @@ export default function About() {
     </section>
   );
 }
-

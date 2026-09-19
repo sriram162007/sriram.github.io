@@ -1,25 +1,26 @@
-import { useRef, useCallback } from 'react';
-import BackgroundEffects from './BackgroundEffects';
-import SectionHeader from './SectionHeader';
-import { motion, useMotionValue, useTransform } from 'framer-motion';
+import { useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
 import {
   GitBranch,
   ArrowUpRight,
   ExternalLink,
   Sparkles,
-  Zap,
-  Brain,
-  Mic,
-  Camera,
-  Truck,
-  Users,
-  Calendar,
-  CreditCard,
-  LayoutDashboard,
   FileText,
   BarChart3,
+  Mic,
+  Brain,
+  Users,
   CheckCircle2,
   XCircle,
+  QrCode,
+  Bot,
+  Smartphone,
+  Zap,
+  Camera,
+  Calendar,
+  Truck,
+  CreditCard,
+  LayoutDashboard,
 } from 'lucide-react';
 
 const projects = [
@@ -79,213 +80,215 @@ const projects = [
     image: '/images/project-milk.png',
     buttons: [],
   },
+  {
+    id: 4,
+    title: 'AI QR Resolution System',
+    category: 'AI Automation',
+    description:
+      'An intelligent field-issue resolution system that scans QR codes placed on equipment or locations and uses AI to diagnose problems, suggest resolution steps, and trigger automated workflows for technicians and support teams.',
+    tech: ['n8n', 'Gemini AI', 'Twilio', 'Google Sheets', 'REST APIs'],
+    features: [
+      { icon: QrCode, title: 'QR Code Scanning', desc: 'Scans equipment QR tags to capture context and asset data' },
+      { icon: Bot, title: 'AI Diagnosis', desc: 'Classifies issues and recommends resolution steps using LLMs' },
+      { icon: Smartphone, title: 'Mobile Workflow', desc: 'Triggers automated actions and notifications to relevant teams' },
+      { icon: BarChart3, title: 'Issue Analytics', desc: 'Tracks recurring problems and resolution effectiveness' },
+    ],
+    image: '/images/project-qr.svg',
+    buttons: [
+      { label: 'GitHub', href: 'https://github.com/sriram162007', variant: 'secondary', hasGithub: true },
+    ],
+  },
 ];
 
 const statusStyles = {
   success: {
     bg: 'bg-emerald-500/10',
     text: 'text-emerald-400',
-    border: 'border-emerald-500/20',
     icon: CheckCircle2,
   },
   warning: {
     bg: 'bg-amber-500/10',
     text: 'text-amber-400',
-    border: 'border-amber-500/20',
     icon: XCircle,
   },
 };
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.15, delayChildren: 0.2 },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0 },
+};
+
 function ProjectCard({ project, index }) {
-  const cardRef = useRef(null);
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const rotateX = useTransform(y, [-200, 200], [5, -5]);
-  const rotateY = useTransform(x, [-200, 200], [-5, 5]);
-  const glowX = useTransform(x, [-200, 200], ['-20%', '20%']);
-  const glowY = useTransform(y, [-200, 200], ['-20%', '20%']);
-
-  const handleMouseMove = useCallback(
-    (e) => {
-      if (!cardRef.current) return;
-      const rect = cardRef.current.getBoundingClientRect();
-      const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
-      x.set(e.clientX - centerX);
-      y.set(e.clientY - centerY);
-    },
-    [x, y]
-  );
-
-  const handleMouseLeave = useCallback(() => {
-    x.set(0);
-    y.set(0);
-  }, [x, y]);
-
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-100px' });
   const statusConfig = project.status ? statusStyles[project.statusType] || statusStyles.success : null;
   const StatusIcon = statusConfig?.icon;
+  const isEven = index % 2 === 0;
+  const projectNumber = String(index + 1).padStart(2, '0');
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 60, filter: 'blur(10px)' }}
-      whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-      viewport={{ once: true, margin: '-100px' }}
-      transition={{ duration: 0.9, delay: index * 0.15 }}
-      className="relative group"
-    >
       <motion.div
-        ref={cardRef}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
-        style={{ rotateX, rotateY, perspective: 1200, transformStyle: 'preserve-3d' }}
-        className="relative glass-card overflow-hidden transition-all duration-500 hover:shadow-[0_0_60px_rgba(255,106,0,0.1)]"
+        ref={ref}
+        initial="hidden"
+        animate={isInView ? 'visible' : 'hidden'}
+        variants={containerVariants}
+        className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center"
       >
-        {/* Animated gradient border glow */}
-        <div
-          className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
-          style={{
-            background: 'conic-gradient(from 0deg, transparent 0%, rgba(255,106,0,0.15) 25%, transparent 50%, rgba(255,138,51,0.15) 75%, transparent 100%)',
-            filter: 'blur(1px)',
-            maskImage: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
-            WebkitMaskImage: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
-            maskComposite: 'xor',
-            WebkitMaskComposite: 'xor',
-            padding: '1px',
-          }}
-        />
-
-        {/* Mouse-follow glow */}
+        {/* Image */}
         <motion.div
-          className="absolute w-[400px] h-[400px] rounded-full bg-accent/10 blur-[100px] pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700"
-          style={{ x: glowX, y: glowY, left: '50%', top: '50%', translateX: '-50%', translateY: '-50%' }}
-          aria-hidden="true"
-        />
+          className={`relative group ${isEven ? '' : 'lg:order-2'}`}
+          variants={itemVariants}
+        >
+        <div className="relative overflow-hidden rounded-2xl border border-border-subtle">
+          <motion.img
+            src={project.image}
+            alt={`${project.title} preview`}
+            className="w-full h-auto object-cover grayscale-[0.3] contrast-110 brightness-105 transition-transform duration-700 group-hover:scale-102"
+            loading="lazy"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
+        </div>
+      </motion.div>
 
-        <div className="relative p-1">
-          {/* Project Image */}
-          <div className="relative overflow-hidden rounded-2xl aspect-[16/9]">
-            <motion.img
-              src={project.image}
-              alt={`${project.title} preview`}
-              width={1200}
-              height={675}
-              loading="lazy"
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/40 to-transparent" />
-
-            {/* Badges overlay */}
-            <div className="absolute top-4 left-4 flex flex-wrap gap-2">
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-white/[0.08] bg-white/[0.06] backdrop-blur-xl px-3 py-1.5 text-xs font-semibold text-text-primary">
-                <Sparkles className="h-3.5 w-3.5 text-accent" aria-hidden="true" />
-                {project.category}
+      {/* Content */}
+      <motion.div className="project-text space-y-8" variants={itemVariants}>
+        <div>
+          <span className="text-xs font-mono font-semibold text-text-muted tracking-wider">
+            {projectNumber}
+          </span>
+          <div className="flex flex-wrap gap-2 mt-3 mb-4">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-border-subtle bg-accent/5 px-3 py-1.5 text-xs font-semibold text-accent">
+              <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
+              {project.category}
+            </span>
+            {statusConfig && (
+              <span className={`inline-flex items-center gap-1.5 rounded-full border ${statusConfig.bg} ${statusConfig.text} backdrop-blur-xl px-3 py-1.5 text-xs font-semibold`}>
+                <StatusIcon className="h-3.5 w-3.5" aria-hidden="true" />
+                {project.status}
               </span>
-              {statusConfig && (
-                <span
-                  className={`inline-flex items-center gap-1.5 rounded-full border ${statusConfig.border} ${statusConfig.bg} backdrop-blur-xl px-3 py-1.5 text-xs font-semibold ${statusConfig.text}`}
-                >
-                  <StatusIcon className="h-3.5 w-3.5" aria-hidden="true" />
-                  {project.status}
-                </span>
-              )}
-            </div>
-          </div>
-
-          {/* Content */}
-          <div className="p-6 sm:p-8 space-y-6">
-            <motion.h3
-              className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-text-primary group-hover:text-accent transition-colors duration-300"
-              style={{ transformStyle: 'preserve-3d', translateZ: 20 }}
-            >
-              {project.title}
-            </motion.h3>
-
-            <p className="text-base leading-relaxed text-text-secondary max-w-3xl">
-              {project.description}
-            </p>
-
-            <div className="flex flex-wrap gap-2">
-              {project.tech.map((t) => (
-                <span
-                  key={t}
-                  className="inline-flex items-center rounded-lg border border-white/[0.06] bg-white/[0.03] px-3 py-1.5 text-xs font-semibold text-text-muted transition-all duration-300 group-hover:border-accent/20 group-hover:text-accent"
-                >
-                  {t}
-                </span>
-              ))}
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-2">
-              {project.features.map((feature) => (
-                <div
-                  key={feature.title}
-                  className="flex items-start gap-3 rounded-xl border border-white/[0.04] bg-white/[0.02] p-4 transition-all duration-300 group-hover:border-white/[0.08] group-hover:bg-white/[0.04]"
-                  style={{ transformStyle: 'preserve-3d', translateZ: 10 }}
-                >
-                  <div className="mt-0.5 rounded-lg bg-accent/10 p-2 text-accent">
-                    <feature.icon className="h-4 w-4" aria-hidden="true" />
-                  </div>
-                  <div>
-                    <h4 className="text-sm font-semibold text-text-primary">{feature.title}</h4>
-                    <p className="text-xs text-text-muted mt-0.5 leading-relaxed">{feature.desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {project.buttons.length > 0 && (
-              <div className="flex flex-wrap gap-3 pt-2">
-                {project.buttons.map((btn) => (
-                  <motion.a
-                    key={btn.label}
-                    href={btn.href}
-                    target={btn.hasGithub ? '_blank' : undefined}
-                    rel={btn.hasGithub ? 'noopener noreferrer' : undefined}
-                    whileHover={{ y: -3, scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    className={`inline-flex items-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold transition-all duration-300 ${
-                      btn.variant === 'primary'
-                        ? 'bg-accent/10 border border-accent/30 text-accent hover:bg-accent/20 hover:shadow-[0_0_24px_rgba(255,106,0,0.2)]'
-                        : 'glass-card text-text-primary hover:text-accent hover:border-accent/30'
-                    }`}
-                  >
-                    {btn.hasGithub ? (
-                      <GitBranch className="h-4 w-4" aria-hidden="true" />
-                    ) : btn.label === 'Case Study' ? (
-                      <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-                    ) : (
-                      <ExternalLink className="h-4 w-4" aria-hidden="true" />
-                    )}
-                    {btn.label}
-                    {btn.hasGithub && (
-                      <ExternalLink className="h-3 w-3 opacity-60" aria-hidden="true" />
-                    )}
-                  </motion.a>
-                ))}
-              </div>
             )}
           </div>
+
+          <h3 className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-text-primary mb-4">
+            {project.title}
+          </h3>
+
+          <p className="text-lg leading-relaxed text-text-secondary max-w-lg">
+            {project.description}
+          </p>
+
+          <div className="flex flex-wrap gap-2 mt-6">
+            {project.tech.map((t) => (
+              <span
+                key={t}
+                className="inline-flex items-center rounded-lg border border-border-subtle px-3 py-1.5 text-xs font-medium text-text-muted"
+              >
+                {t}
+              </span>
+            ))}
+          </div>
         </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {project.features.map((feature) => (
+            <div
+              key={feature.title}
+              className="flex items-start gap-3"
+            >
+              <div className="rounded-lg bg-accent/10 p-2 text-accent flex-shrink-0">
+                <feature.icon className="h-4 w-4" aria-hidden="true" />
+              </div>
+              <div>
+                <h4 className="text-sm font-semibold text-text-primary">{feature.title}</h4>
+                <p className="text-xs text-text-muted mt-0.5 leading-relaxed">{feature.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {project.buttons.length > 0 && (
+          <div className="flex flex-wrap gap-3 pt-2">
+            {project.buttons.map((btn) => (
+              <motion.a
+                key={btn.label}
+                href={btn.href}
+                target={btn.hasGithub ? '_blank' : undefined}
+                rel={btn.hasGithub ? 'noopener noreferrer' : undefined}
+                whileHover={{ y: -2 }}
+                className={`inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-all ${
+                  btn.variant === 'primary'
+                    ? 'border border-accent/30 bg-accent/5 text-accent hover:bg-accent/10'
+                    : 'border border-border-subtle bg-transparent text-text-secondary hover:border-accent/30 hover:text-accent'
+                }`}
+              >
+                {btn.hasGithub ? (
+                  <GitBranch className="h-4 w-4" aria-hidden="true" />
+                ) : btn.label === 'Case Study' ? (
+                  <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                ) : (
+                  <ExternalLink className="h-4 w-4" aria-hidden="true" />
+                )}
+                {btn.label}
+                {btn.hasGithub && (
+                  <ExternalLink className="h-3 w-3 opacity-40" aria-hidden="true" />
+                )}
+              </motion.a>
+            ))}
+          </div>
+        )}
       </motion.div>
     </motion.div>
   );
 }
 
 export default function Projects() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-80px' });
+
   return (
-    <section id="projects" className="relative py-32 overflow-hidden" aria-labelledby="projects-heading">
-      <BackgroundEffects particleCount={20} />
+    <section
+      id="projects"
+      className="relative bg-secondary-bg py-24 sm:py-32"
+      aria-labelledby="projects-heading"
+      ref={ref}
+    >
+      <div className="mx-auto max-w-7xl px-6 lg:px-12">
+        {/* Section Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? 'visible' : 'hidden'}
+          variants={containerVariants}
+          className="text-center mb-20"
+        >
+          <motion.span
+            variants={itemVariants}
+            className="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.3em] uppercase text-text-muted mb-6"
+          >
+            <Sparkles className="h-3.5 w-3.5 text-accent" aria-hidden="true" />
+            Featured Projects
+          </motion.span>
+          <motion.h2
+            id="projects-heading"
+            variants={itemVariants}
+            className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-text-primary mb-6"
+          >
+            Real-world <span className="text-accent">AI applications</span>
+          </motion.h2>
+          <motion.p variants={itemVariants} className="max-w-2xl mx-auto text-lg text-text-secondary">
+            Real-world AI applications, automation systems, and software solutions built to solve practical business problems.
+          </motion.p>
+        </motion.div>
 
-      <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-12">
-        <SectionHeader
-          badge="Featured Projects"
-          badgeIcon={Sparkles}
-          title={<>Real-world <span className="gradient-text">AI applications</span></>}
-          subtitle="Real-world AI applications, automation systems, and software solutions built to solve practical business problems."
-          headingId="projects-heading"
-        />
-
-        <div className="space-y-8">
+        {/* Projects */}
+        <div className="space-y-24">
           {projects.map((project, index) => (
             <ProjectCard key={project.id} project={project} index={index} />
           ))}
