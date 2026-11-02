@@ -3,19 +3,19 @@ import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 
 /* ─── Tech Stack Items (Text-Only) ─── */
 const TECH_LIST = [
-  'React',
-  'JavaScript',
-  'Python',
-  'Node.js',
+  'Next.js 15',
+  'React 19',
+  'TypeScript',
+  'Gemini AI',
+  'Supabase',
   'Firebase',
-  'Gemini',
-  'n8n',
-  'Twilio',
-  'Git',
+  'n8n Pipelines',
+  'Node.js',
+  'Python',
 ];
 
-const TECH_LINE_1 = ['React', 'JavaScript', 'Python', 'Node.js'];
-const TECH_LINE_2 = ['Firebase', 'Gemini', 'n8n', 'Twilio', 'Git'];
+const TECH_LINE_1 = ['Next.js 15', 'React 19', 'TypeScript', 'Gemini AI'];
+const TECH_LINE_2 = ['Supabase', 'Firebase', 'n8n Pipelines', 'Node.js', 'Python'];
 
 /* ─── Film Grain Texture ─── */
 function GrainOverlay() {
@@ -415,35 +415,10 @@ export default function Hero() {
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'flex-end',
-                gap: 'clamp(12px, 1.8vh, 18px)',
+                gap: 'clamp(14px, 2vh, 22px)',
                 paddingBottom: 4,
               }}
             >
-              {/* Tag / Sub-header badge */}
-              <div
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: 10,
-                }}
-              >
-                <div
-                  aria-hidden="true"
-                  style={{ width: 28, height: 2, background: '#E10600', flexShrink: 0 }}
-                />
-                <span
-                  style={{
-                    fontFamily: "'Space Grotesk', sans-serif",
-                    color: 'rgba(255,255,255,0.65)',
-                    fontSize: 'clamp(10px, 0.8vw, 11.5px)',
-                    letterSpacing: '0.24em',
-                    fontWeight: 700,
-                  }}
-                >
-                  SOFTWARE BUILDER · AI AUTOMATION
-                </span>
-              </div>
-
               {/* Main Headline */}
               <h1
                 id="hero-heading"
@@ -457,11 +432,11 @@ export default function Hero() {
                 }}
               >
                 <span style={{ color: '#D4D4D4', fontWeight: 700 }}>
-                  Turning Ideas Into
+                  Architecting Autonomous AI &amp;
                 </span>
                 <br />
                 <span style={{ color: '#FFFFFF', fontWeight: 900 }}>
-                  Working Software<span style={{ color: '#E10600' }}>.</span>
+                  Enterprise Systems<span style={{ color: '#E10600' }}>.</span>
                 </span>
               </h1>
 
@@ -470,14 +445,14 @@ export default function Hero() {
                 style={{
                   fontFamily: "'Inter', sans-serif",
                   fontSize: 'clamp(12px, 0.95vw, 14px)',
-                  color: 'rgba(255,255,255,0.65)',
+                  color: 'rgba(255,255,255,0.7)',
                   lineHeight: 1.65,
-                  maxWidth: 400,
+                  maxWidth: 420,
                   margin: 0,
                 }}
               >
-                I build practical software systems, automate real workflows,
-                and create digital products that solve everyday problems.
+                Engineering production-grade web applications, autonomous multi-agent pipelines,
+                and scalable cloud business systems that eliminate operational bottlenecks.
               </p>
 
               {/* 2 CTA Buttons */}
@@ -820,33 +795,7 @@ export default function Hero() {
           SIGNATURE → LOCATION / AVAILABILITY → SCROLL INDICATOR
          ═══════════════════════════════════════════════════ */}
       <div className="hero-mobile-wrapper">
-        {/* 1. EYEBROW */}
-        <div
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: 10,
-            marginBottom: 14,
-          }}
-        >
-          <div
-            aria-hidden="true"
-            style={{ width: 24, height: 2, background: '#E10600', flexShrink: 0 }}
-          />
-          <span
-            style={{
-              fontFamily: "'Space Grotesk', sans-serif",
-              color: 'rgba(255,255,255,0.68)',
-              fontSize: 10.5,
-              letterSpacing: '0.22em',
-              fontWeight: 700,
-            }}
-          >
-            SOFTWARE BUILDER · AI AUTOMATION
-          </span>
-        </div>
-
-        {/* 2. HEADLINE */}
+        {/* 1. HEADLINE */}
         <h1
           style={{
             fontFamily: "'Space Grotesk', sans-serif",
@@ -859,10 +808,10 @@ export default function Hero() {
             maxWidth: 380,
           }}
         >
-          <span style={{ color: '#D4D4D4', fontWeight: 700 }}>Turning Ideas Into</span>
+          <span style={{ color: '#D4D4D4', fontWeight: 700 }}>Architecting Autonomous AI &amp;</span>
           <br />
           <span style={{ color: '#FFFFFF', fontWeight: 900 }}>
-            Working Software<span style={{ color: '#E10600' }}>.</span>
+            Enterprise Systems<span style={{ color: '#E10600' }}>.</span>
           </span>
         </h1>
 
@@ -871,15 +820,15 @@ export default function Hero() {
           style={{
             fontFamily: "'Inter', sans-serif",
             fontSize: 'clamp(13px, 3.6vw, 14.5px)',
-            color: 'rgba(255,255,255,0.65)',
+            color: 'rgba(255,255,255,0.7)',
             lineHeight: 1.65,
             maxWidth: 350,
             margin: '0 0 20px 0',
             textAlign: 'center',
           }}
         >
-          I build practical software systems, automate real workflows,
-          and create digital products that solve everyday problems.
+          Engineering production-grade web applications, autonomous multi-agent pipelines,
+          and scalable cloud business systems that eliminate operational bottlenecks.
         </p>
 
         {/* 4. CTA BUTTONS (Stacked) */}
